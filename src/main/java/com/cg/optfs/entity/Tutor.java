@@ -11,6 +11,18 @@ public class Tutor {
 	private long  tutorId;
     private String username;
     private String password;
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	private String name;
 	private String subject;
 	private String phoneNumber;
@@ -48,9 +60,13 @@ public class Tutor {
 		this.address = address;
 	}
 	
-	public Tutor(long tutorId, String name, String subject, String phoneNumber, String address, String qualifications) {
+	
+	public Tutor(long tutorId, String username, String password, String name, String subject, String phoneNumber,
+			String address, String qualifications) {
 		super();
 		this.tutorId = tutorId;
+		this.username = username;
+		this.password = password;
 		this.name = name;
 		this.subject = subject;
 		this.phoneNumber = phoneNumber;
@@ -61,10 +77,12 @@ public class Tutor {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
 	@Override
 	public String toString() {
-		return "Tutor [tutorId=" + tutorId + ", name=" + name + ", subject=" + subject + ", phoneNumber=" + phoneNumber
-				+ ", address=" + address + ", qualifications=" + qualifications + "]";
+		return "Tutor [tutorId=" + tutorId + ", username=" + username + ", password=" + password + ", name=" + name
+				+ ", subject=" + subject + ", phoneNumber=" + phoneNumber + ", address=" + address + ", qualifications="
+				+ qualifications + "]";
 	}
 	public String getQualifications() {
 		return qualifications;
