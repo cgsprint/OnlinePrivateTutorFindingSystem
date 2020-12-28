@@ -9,6 +9,8 @@ import javax.persistence.Table;
 public class Tutor {
     @Id
 	private long  tutorId;
+    private String username;
+    private String password;
 	private String name;
 	private String subject;
 	private String phoneNumber;
