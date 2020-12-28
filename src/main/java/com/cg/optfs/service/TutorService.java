@@ -8,11 +8,11 @@ import com.cg.optfs.entity.Tutor;
 
 public interface TutorService {
 	
-	public List<Tutor> getAllTutor();
-	public Tutor addTutor(Tutor tutor);
+	//public List<Tutor> getAllRequests();
+	public Tutor viewProfile(long tutorId);
 	public Tutor updateProfile(Tutor tutor);
-	public Tutor getTutorBySubject(Tutor tutor);
-	public Tutor deleteTutor(long tutorid);
+	
+	
 	
 
 }
