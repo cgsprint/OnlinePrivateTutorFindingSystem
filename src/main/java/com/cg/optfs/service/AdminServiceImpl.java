@@ -27,7 +27,8 @@ public class AdminServiceImpl implements AdminService{
 
 	@Override
 	public Tutor addTutor(Tutor tutor) {
-		tutorRepo.sa
+		
+		return tutor;
 	}
 	
 	
