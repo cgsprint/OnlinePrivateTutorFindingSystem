@@ -46,6 +46,12 @@ public class AdminController {
 	public ResponseEntity<Admin> addTutor(@RequestBody Tutor tutor)
 	{
 		Tutor tutor1 = adminServ.addTutor(tutor);
+		if(tutor1 != null)
+		{
+			return new ResponseEntity("Tutor registered...", HttpStatus.OK);
+		}
+		return new ResponseEntity("Tutor registration failed...", HttpStatus.NOT_FOUND);
+		
 	}
 
 }
