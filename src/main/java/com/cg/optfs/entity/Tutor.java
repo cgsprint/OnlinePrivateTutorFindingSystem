@@ -2,10 +2,13 @@ package com.cg.optfs.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -21,6 +24,8 @@ public class Tutor {
 	private String phoneNumber;
 	private String address;
 	private String qualifications;
+	@OneToMany(cascade=CascadeType.ALL)
+	@JoinColumn(name="rId",referencedColumnName="tutorId")
     private List<Request> requestList;
 	
 	public String getUsername() {
@@ -75,8 +80,15 @@ public class Tutor {
 		this.qualifications = qualifications;
 	}
 	
+	public List<Request> getRequestList() {
+		return requestList;
+	}
+	public void setRequestList(List<Request> requestList) {
+		this.requestList = requestList;
+	}
+	
 	public Tutor(long tutorId, String username, String password, String name, String subject, String phoneNumber,
-			String address, String qualifications) {
+			String address, String qualifications, List<Request> requestList) {
 		super();
 		this.tutorId = tutorId;
 		this.username = username;
@@ -86,22 +98,20 @@ public class Tutor {
 		this.phoneNumber = phoneNumber;
 		this.address = address;
 		this.qualifications = qualifications;
+		this.requestList = requestList;
 	}
 	public Tutor() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
 	@Override
 	public String toString() {
 		return "Tutor [tutorId=" + tutorId + ", username=" + username + ", password=" + password + ", name=" + name
 				+ ", subject=" + subject + ", phoneNumber=" + phoneNumber + ", address=" + address + ", qualifications="
-				+ qualifications + "]";
+				+ qualifications + ", requestList=" + requestList + "]";
 	}
-	
-	
-	
-	
+
+
 
 }
 
