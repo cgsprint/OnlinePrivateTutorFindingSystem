@@ -8,4 +8,8 @@ public interface ParentService {
 
 	public Parent addParent(Parent parent);
 
+	public Parent viewParent(Integer parentId);
+
+	public Parent updateParent(Parent parent);
+
 }

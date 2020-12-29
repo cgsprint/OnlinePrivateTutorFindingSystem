@@ -26,4 +26,17 @@ public class ParentServiceImpl implements ParentService {
 		return parent;
 	}
 
+	@Override
+	public Parent viewParent(Integer parentId) {
+		// TODO Auto-generated method stub
+		return parentRepo.findById(parentId).get();
+	}
+
+	@Override
+	public Parent updateParent(Parent parent) {
+		// TODO Auto-generated method stub
+		parentRepo.save(parent);
+		return parent;
+	}
+
 }
