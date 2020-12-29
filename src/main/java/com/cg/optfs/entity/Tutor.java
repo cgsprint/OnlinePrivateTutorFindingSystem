@@ -17,9 +17,9 @@ public class Tutor {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
 	private long  tutorId;
+    private String name;
     private String username;
     private String password;
-    private String name;
 	private String subject;
 	private String phoneNumber;
 	private String address;
@@ -28,19 +28,23 @@ public class Tutor {
 	@JoinColumn(name="rId",referencedColumnName="tutorId")
     private List<Request> requestList;
 	
-	public String getUsername() {
-		return username;
+	public Tutor() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
-	public void setUsername(String username) {
+	public Tutor(long tutorId, String username, String password, String name, String subject, String phoneNumber,
+			String address, String qualifications, List<Request> requestList) {
+		super();
+		this.tutorId = tutorId;
 		this.username = username;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
 		this.password = password;
+		this.name = name;
+		this.subject = subject;
+		this.phoneNumber = phoneNumber;
+		this.address = address;
+		this.qualifications = qualifications;
+		this.requestList = requestList;
 	}
-	
 	
 	public long getTutorId() {
 		return tutorId;
@@ -54,6 +58,19 @@ public class Tutor {
 	public void setName(String name) {
 		this.name = name;
 	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
 	public String getSubject() {
 		return subject;
 	}
@@ -87,31 +104,12 @@ public class Tutor {
 		this.requestList = requestList;
 	}
 	
-	public Tutor(long tutorId, String username, String password, String name, String subject, String phoneNumber,
-			String address, String qualifications, List<Request> requestList) {
-		super();
-		this.tutorId = tutorId;
-		this.username = username;
-		this.password = password;
-		this.name = name;
-		this.subject = subject;
-		this.phoneNumber = phoneNumber;
-		this.address = address;
-		this.qualifications = qualifications;
-		this.requestList = requestList;
-	}
-	public Tutor() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
 	@Override
 	public String toString() {
 		return "Tutor [tutorId=" + tutorId + ", username=" + username + ", password=" + password + ", name=" + name
 				+ ", subject=" + subject + ", phoneNumber=" + phoneNumber + ", address=" + address + ", qualifications="
 				+ qualifications + ", requestList=" + requestList + "]";
 	}
-
-
 
 }
 
