@@ -1,6 +1,10 @@
 package com.cg.optfs.entity;
 
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -8,9 +12,17 @@ import javax.persistence.Table;
 @Table(name="TUTOR")
 public class Tutor {
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
 	private long  tutorId;
     private String username;
     private String password;
+    private String name;
+	private String subject;
+	private String phoneNumber;
+	private String address;
+	private String qualifications;
+    private List<Request> requestList;
+	
 	public String getUsername() {
 		return username;
 	}
@@ -23,11 +35,7 @@ public class Tutor {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	private String name;
-	private String subject;
-	private String phoneNumber;
-	private String address;
-	public String qualifications;
+	
 	
 	public long getTutorId() {
 		return tutorId;
@@ -60,6 +68,12 @@ public class Tutor {
 		this.address = address;
 	}
 	
+	public String getQualifications() {
+		return qualifications;
+	}
+	public void setQualifications(String qualifications) {
+		this.qualifications = qualifications;
+	}
 	
 	public Tutor(long tutorId, String username, String password, String name, String subject, String phoneNumber,
 			String address, String qualifications) {
@@ -84,12 +98,7 @@ public class Tutor {
 				+ ", subject=" + subject + ", phoneNumber=" + phoneNumber + ", address=" + address + ", qualifications="
 				+ qualifications + "]";
 	}
-	public String getQualifications() {
-		return qualifications;
-	}
-	public void setQualifications(String qualifications) {
-		this.qualifications = qualifications;
-	}
+	
 	
 	
 	
