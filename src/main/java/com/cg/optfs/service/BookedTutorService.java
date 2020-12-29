@@ -6,5 +6,5 @@ import com.cg.optfs.entity.BookedTutor;
 
 public interface BookedTutorService {
 
-	public List<BookedTutor> getBookedTutorList();
+	public List<BookedTutor> viewBookedTutor();
 }

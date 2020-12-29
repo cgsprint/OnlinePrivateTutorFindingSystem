@@ -6,5 +6,5 @@ import com.cg.optfs.entity.Request;
 
 public interface RequestService {
 
-public List<Request> getRequestList();
+public List<Request> viewRequest();
 }

@@ -18,7 +18,7 @@ public class RequestServiceImpl implements RequestService{
 	RequestRepository requestRepo;
 	
 	@Override
-	public List<Request> getRequestList(){
+	public List<Request> viewRequest(){
 		List<Request> req= requestRepo.findAll();
 		return req;
 	}

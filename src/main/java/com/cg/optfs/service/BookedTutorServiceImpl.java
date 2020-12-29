@@ -18,7 +18,7 @@ public class BookedTutorServiceImpl  implements BookedTutorService {
 	BookedTutorRepository bookedtutorRepo;
 
 	@Override
-	public List<BookedTutor> getBookedTutorList() {
+	public List<BookedTutor> viewBookedTutor() {
 		List<BookedTutor> bookt=bookedtutorRepo.findAll();
 		return bookt ;
 	}

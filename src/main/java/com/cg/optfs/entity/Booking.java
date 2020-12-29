@@ -58,9 +58,5 @@ public class Booking {
 		return "Booking [parentId=" + parentId + ", subject=" + subject + "]";
 	}
 
-	public static void main(String[] args) {
-		
-		Date date = new Date();
-		System.out.println(date.toString());
-	}
+	
 }
