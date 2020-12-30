@@ -1,17 +1,22 @@
 package com.cg.optfs.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.optfs.entity.Admin;
+import com.cg.optfs.entity.Ebook;
 import com.cg.optfs.entity.Tutor;
+import com.cg.optfs.exception.TutorNotFoundException;
 import com.cg.optfs.service.AdminService;
 
 @RestController
@@ -21,12 +26,6 @@ public class AdminController {
 	@Autowired
 	AdminService adminServ;
 	
-	@GetMapping("/hello")
-	public String helloAdmin()
-	{
-		return "Hello";
-		
-	}
 	
 	@PostMapping("/login")
 	public ResponseEntity<Admin> loginAdmin(@RequestParam("username") String Username,
@@ -51,6 +50,53 @@ public class AdminController {
 			return new ResponseEntity("Tutor registered...", HttpStatus.OK);
 		}
 		return new ResponseEntity("Tutor registration failed...", HttpStatus.NOT_FOUND);
+		
+	}
+	
+	
+	@PutMapping("/updateTutor")
+	public ResponseEntity<Tutor> updateTutor(@RequestParam("id") Long Id,@RequestBody Tutor tutor)throws TutorNotFoundException
+	{
+//		Optional<Tutor> tu =  adminServ.getTutorById(Id); 
+		Tutor tu = adminServ.getTutorById(Id).orElseThrow(()-> new TutorNotFoundException("Tutor does not exist"+Id));
+		if(tu != null)
+		{
+			tu.setName(tutor.getName());
+			tu.setUsername(tutor.getUsername());
+			tu.setPassword(tutor.getPassword());
+			tu.setAddress(tutor.getAddress());
+			tu.setPhoneNumber(tutor.getPhoneNumber());
+			tu.setQualifications(tutor.getQualifications());
+			tu.setSubject(tutor.getSubject());
+			Tutor tu1 = adminServ.updateTutor(tu);
+			if(tu1 == null)
+			{
+				return new ResponseEntity("Failed to update tutor", HttpStatus.NOT_FOUND);
+			}
+			return new ResponseEntity<Tutor>(tu1, HttpStatus.OK);
+		}
+		
+		return new ResponseEntity("No Such Tutor Found!", HttpStatus.NOT_FOUND);
+		
+	}
+	
+	@DeleteMapping("/deleteTutor")
+	public String deleteTutor(@RequestParam("id") Long Id)throws TutorNotFoundException
+	{
+		Tutor tu = adminServ.getTutorById(Id).orElseThrow(()->new TutorNotFoundException("Tutor does not exist "+Id));
+		adminServ.deleteTutor(tu);
+		return "Tutor deleted...";
+	}
+	
+	@PostMapping("/addEbook")
+	public ResponseEntity<Ebook> addEbook(@RequestBody Ebook ebook)
+	{
+		Ebook ebook1 = adminServ.addEbook(ebook);
+		if(ebook1 != null)
+		{
+			return new ResponseEntity("Ebook added...", HttpStatus.OK);
+		}
+		return new ResponseEntity("Failed to add ebook", HttpStatus.NOT_FOUND);
 		
 	}
 
