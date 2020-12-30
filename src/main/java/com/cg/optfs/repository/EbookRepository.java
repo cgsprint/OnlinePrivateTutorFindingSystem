@@ -15,7 +15,7 @@ public interface EbookRepository extends JpaRepository<Ebook, Integer>{
 	@Query("SELECT ebook FROM Ebook ebook WHERE ebook.title= :title")
 	public List<Ebook> getEbooksbyTitle(@Param("title") String title);
 	
-	@Query("SELECT ebook.getTitle FROM Ebook ebook WHERE ebook.authorname= :authorname")
+	@Query("SELECT ebook.title FROM Ebook ebook WHERE ebook.authorname= :authorname")
 	public List<String> getEbooksbyAuthor(@Param("authorname") String authorname);
 	
 }

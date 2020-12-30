@@ -27,19 +27,19 @@ public class EbookServiceImpl implements EbookService{
 		ebook.setAuthorname(authorname);
 		ebook.setUrl(url);
 		erepository.save(ebook);
-		return null;
+		return ebook;
 	}
 	@Override
 	public Ebook getEbook(int ebookId) {
 		// TODO Auto-generated method stub
-		Ebook ebook=erepository.getOne(ebookId);
+		Ebook ebook=erepository.findById(ebookId).get();
 		return ebook;
 	}
 
 	@Override
 	public Ebook removeEbook(int ebookId) {
 		// TODO Auto-generated method stub
-		Ebook ebook=erepository.getOne(ebookId);
+		Ebook ebook=erepository.findById(ebookId).get();
 		erepository.delete(ebook);
 		return ebook;
 	}
@@ -47,7 +47,7 @@ public class EbookServiceImpl implements EbookService{
 	@Override
 	public Ebook updateEbook(Ebook ebook) {
 		// TODO Auto-generated method stub
-		erepository.saveAndFlush(ebook);
+		erepository.save(ebook);
 		return ebook;
 	}
 
