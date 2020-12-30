@@ -27,6 +27,12 @@ public interface AdminService {
 
 	public Ebook addEbook(Ebook ebook);
 
+	public Optional<Ebook> getEbookById(int id);
+
+	public Ebook updateEbook(Ebook eb);
+
+	public void deleteEbook(Ebook eb);
+
 	
 	
 }

@@ -62,6 +62,22 @@ public class AdminServiceImpl implements AdminService{
 		ebookRepo.save(ebook);
 		return ebook;
 	}
+
+	@Override
+	public Optional<Ebook> getEbookById(int id) {
+		return ebookRepo.findById(id);
+	}
+
+	@Override
+	public Ebook updateEbook(Ebook eb) {
+		Ebook eb2 = ebookRepo.save(eb);
+		return eb2;
+	}
+
+	@Override
+	public void deleteEbook(Ebook eb) {
+		ebookRepo.delete(eb);
+	}
 	
 	
 }
