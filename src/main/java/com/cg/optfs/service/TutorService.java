@@ -8,7 +8,7 @@ import com.cg.optfs.entity.Tutor;
 
 
 public interface TutorService {
-	
+	public Tutor loginTutor(String username,String password);
 	public List<Request> getAllRequests();
 	public Tutor viewProfile(long tutorId);
 	public Tutor updateProfile(Tutor tutor);

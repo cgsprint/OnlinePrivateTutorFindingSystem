@@ -16,6 +16,13 @@ public class TutorServiceImpl implements TutorService{
 	public TutorRepository tutorRepo;
 	@Autowired
 	public RequestRepository requestRepo;
+	
+	@Override
+	public Tutor loginTutor(String username,String password) {
+		// TODO Auto-generated method stub
+		return tutorRepo.loginTutor(username, password);
+	}
+
 
 	@Override
 	public Tutor updateProfile(Tutor tutor) {
@@ -34,6 +41,5 @@ public class TutorServiceImpl implements TutorService{
 		// TODO Auto-generated method stub
 		return requestRepo.findAll();
 	}
-
 
 }
