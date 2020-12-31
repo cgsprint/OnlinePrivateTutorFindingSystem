@@ -1,5 +1,8 @@
 package com.cg.optfs.controller;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cg.optfs.entity.Admin;
 import com.cg.optfs.entity.Parent;
 import com.cg.optfs.entity.Tutor;
+import com.cg.optfs.exception.TutorNotFoundException;
 import com.cg.optfs.service.ParentService;
 
 @RestController
@@ -59,9 +63,21 @@ public class ParentController {
 	}
 	
 	@PutMapping("/updateParent")
-	public Parent updateParent(@RequestBody Parent parent)
+	public Parent updateParent(@RequestParam("id") Integer Id,@RequestBody Parent parent)
 	{
-		return parentServ.updateParent(parent);
+		Parent pa =parentServ.getParentById(Id);
+			pa.setFirstName(parent.getFirstName());
+			pa.setLastName(parent.getLastName());
+			pa.setMobileNo(parent.getMobileNo());
+			pa.setAddress(parent.getAddress());
+			pa.setEmail(parent.getEmail());
+			pa.setUsername(parent.getUsername());
+			pa.setPassword(parent.getPassword());
+			Parent pa1=parentServ.updateParent(pa);
+			return pa1;
 	}
-
+	@GetMapping("/viewAllTutor")
+	public List<Tutor> viewAllTutor(){
+		return parentServ.viewAllTutor();
+	}
 }
