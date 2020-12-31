@@ -1,7 +1,9 @@
 package com.cg.optfs.test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
@@ -12,8 +14,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.cg.optfs.entity.Request;
 import com.cg.optfs.entity.Tutor;
+import com.cg.optfs.repository.RequestRepository;
 import com.cg.optfs.repository.TutorRepository;
+import com.cg.optfs.service.RequestService;
 import com.cg.optfs.service.TutorService;
 
 @RunWith(SpringRunner.class)
@@ -25,9 +30,13 @@ public class TutorServiceTest {
 
 	@MockBean
 	private TutorRepository tutorRepo;
+	@MockBean
+	private RequestRepository requestRepo;
+	@Autowired
+	private RequestService requestService;
 
 	@Test
-	public void updateProfile() {
+	public void testUpdateProfile() {
 
 		Tutor tutor = new Tutor();
 		tutor.setUsername("man43");
@@ -42,22 +51,34 @@ public class TutorServiceTest {
 		assertThat(tutorService.updateProfile(tutor)).isEqualTo(tutor);
 
 	}
-    @Ignore
+
+	@Ignore
 	@Test
-	public void viewTutor(long tutorId) {
+	public void testViewTutor() {
 
 		Tutor tutor = new Tutor();
 		tutor.setUsername("man43");
 		tutor.setPassword("man435");
-		tutor.setTutorId(tutorId);
+		tutor.setTutorId(1);
 		tutor.setName("Mnaoj");
 		tutor.setSubject("English");
 		tutor.setQualifications("Bsc");
 		tutor.setAddress("Bhiwandi");
 
-		Mockito.when(tutorRepo.findById(tutorId).get()).thenReturn(tutor);
- 
-		assertThat(tutorService.viewProfile(tutorId)).isEqualTo(tutor);
+		// Mockito.when(tutorRepo.findById(1).get()).thenReturn(tutor);
+
+		assertThat(tutorService.viewProfile(1)).isEqualTo(tutor);
+		// assertEquals(1,tutorService.viewProfile(tutorId));
+
+	}
+
+	@Test
+	public void testGetAllRequest() {
+		// when(requestRepo.findAll()).thenReturn(Stream.of(new Request()))
+
+		List<Request> list = new ArrayList<>();
+		Mockito.when(requestRepo.findAll()).thenReturn(list);
+		assertThat(requestService.viewRequest()).isEqualTo(list);
 
 	}
 }
