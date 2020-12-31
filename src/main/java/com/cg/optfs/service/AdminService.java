@@ -1,11 +1,14 @@
 package com.cg.optfs.service;
 
+import java.util.List;
+
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
 import com.cg.optfs.entity.Admin;
 import com.cg.optfs.entity.Ebook;
+import com.cg.optfs.entity.Parent;
 import com.cg.optfs.entity.Tutor;
 
 
@@ -32,6 +35,8 @@ public interface AdminService {
 	public Ebook updateEbook(Ebook eb);
 
 	public void deleteEbook(Ebook eb);
+
+	public List<Parent> viewParents();
 
 	
 	

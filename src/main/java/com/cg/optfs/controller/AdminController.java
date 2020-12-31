@@ -1,11 +1,12 @@
 package com.cg.optfs.controller;
 
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.optfs.entity.Admin;
 import com.cg.optfs.entity.Ebook;
+import com.cg.optfs.entity.Parent;
 import com.cg.optfs.entity.Tutor;
 import com.cg.optfs.exception.EbookNotFoundException;
 import com.cg.optfs.exception.TutorNotFoundException;
@@ -127,6 +129,13 @@ public class AdminController {
 		Ebook eb = adminServ.getEbookById(Id).orElseThrow(()->new EbookNotFoundException("Ebook does not exist with id "+Id));
 		adminServ.deleteEbook(eb);
 		return "Ebook deleted...";
+	}
+	
+	@GetMapping("/viewParents")
+	public List<Parent> viewParents()
+	{
+		List<Parent> parents = adminServ.viewParents();
+		return parents;
 	}
 	
 

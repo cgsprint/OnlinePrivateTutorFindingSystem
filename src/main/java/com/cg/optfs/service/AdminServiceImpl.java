@@ -1,5 +1,6 @@
 package com.cg.optfs.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cg.optfs.entity.Admin;
 import com.cg.optfs.entity.Ebook;
+import com.cg.optfs.entity.Parent;
 import com.cg.optfs.entity.Tutor;
 import com.cg.optfs.repository.AdminRepository;
 import com.cg.optfs.repository.EbookRepository;
+import com.cg.optfs.repository.ParentRepository;
 import com.cg.optfs.repository.TutorRepository;
 
 
@@ -26,6 +29,9 @@ public class AdminServiceImpl implements AdminService{
 
 	@Autowired
 	private EbookRepository ebookRepo;
+	
+	@Autowired
+	private ParentRepository parentRepo;
 	
 	@Override
 	public Admin loginAdmin(String username, String password) {
@@ -77,6 +83,12 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public void deleteEbook(Ebook eb) {
 		ebookRepo.delete(eb);
+	}
+
+	@Override
+	public List<Parent> viewParents() {
+		List<Parent> parents = parentRepo.findAll();
+		return parents;
 	}
 	
 	
