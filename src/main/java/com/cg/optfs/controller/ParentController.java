@@ -52,7 +52,7 @@ public class ParentController {
 		return new ResponseEntity("Parent registration failed...", HttpStatus.NOT_FOUND);
 	}
 	
-	@PostMapping("/{parentId}")
+	@GetMapping("/{parentId}")
 	public Parent viewParent(@PathVariable Integer parentId)
 	{
 		return parentServ.viewParent(parentId);
@@ -63,4 +63,5 @@ public class ParentController {
 	{
 		return parentServ.updateParent(parent);
 	}
+
 }

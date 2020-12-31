@@ -20,9 +20,9 @@ public class Parent {
 	@Column(name="last_name")
 	private String lastName;
 	@Column(name="Username")
-	private String parentUsername;
+	private String username;
 	@Column(name="Password")
-	private String parentPassword;
+	private String password;
 	@Column(name="mob_no")
 	private String mobileNo;
 	@Column
@@ -40,8 +40,8 @@ public class Parent {
 //		this.parentId = parentId;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.parentUsername = username;
-		this.parentPassword = password;
+		this.username = username;
+		this.password = password;
 		this.mobileNo = mobileNo;
 		this.email = email;
 		this.address = address;
@@ -65,16 +65,16 @@ public class Parent {
 		this.lastName = lastName;
 	}
 	public String getUsername() {
-		return parentUsername;
+		return username;
 	}
 	public void setUsername(String username) {
-		this.parentUsername = username;
+		this.username = username;
 	}
 	public String getPassword() {
-		return parentPassword;
+		return password;
 	}
 	public void setPassword(String password) {
-		this.parentPassword = password;
+		this.password = password;
 	}
 	public String getMobileNo() {
 		return mobileNo;
@@ -94,10 +94,12 @@ public class Parent {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+
 	@Override
 	public String toString() {
 		return "Parent [parentId=" + parentId + ", firstName=" + firstName + ", lastName=" + lastName + ", username="
-				+ parentUsername + ", password=" + parentPassword + ", mobileNo=" + mobileNo + ", email=" + email + ", address="
+				+ username + ", password=" + password + ", mobileNo=" + mobileNo + ", email=" + email + ", address="
 				+ address + "]";
 	}
+
 }
