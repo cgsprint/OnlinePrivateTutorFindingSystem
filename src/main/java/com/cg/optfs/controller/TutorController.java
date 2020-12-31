@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cg.optfs.entity.Admin;
 import com.cg.optfs.entity.Request;
 import com.cg.optfs.entity.Tutor;
 import com.cg.optfs.service.TutorService;
@@ -20,6 +20,7 @@ import com.cg.optfs.service.TutorService;
 
 
 @RestController
+@RequestMapping("/tutor")
 public class TutorController {
 
 	@Autowired
@@ -41,19 +42,19 @@ public class TutorController {
 
 	
 	
-	@PostMapping("/tutors")
+	@PostMapping("/tutor/updateTutor")
 	public Tutor updateProfile(@RequestBody Tutor tutor) {
 
 		return tutorservice.updateProfile(tutor);
 	}
 
-	@GetMapping("/tutors/{tutorId}")
+	@GetMapping("/tutor/viewTutor/{tutorId}")
 	public Tutor viewProfile(@PathVariable long tutorId) {
 
 		return tutorservice.viewProfile(tutorId);
 	}
 
-	@GetMapping("/request")
+	@GetMapping("/tutor/request")
 	public List<Request> getAllRequest() {
 
 		return tutorservice.getAllRequests();
