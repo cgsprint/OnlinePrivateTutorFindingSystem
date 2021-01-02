@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.optfs.entity.Admin;
+import com.cg.optfs.entity.Ebook;
+import com.cg.optfs.entity.Feedback;
 import com.cg.optfs.entity.Parent;
 import com.cg.optfs.entity.Tutor;
 import com.cg.optfs.exception.TutorNotFoundException;
@@ -80,4 +82,17 @@ public class ParentController {
 	public List<Tutor> viewAllTutor(){
 		return parentServ.viewAllTutor();
 	}
+	
+	@GetMapping("/viewEbook")
+	public List<Ebook> viewEbook(){
+		return parentServ.viewEbook();
+	}
+	
+	@PostMapping("/giveFeedback/{parentId}")
+	public Feedback giveFeedback(@PathVariable int parentId,@RequestBody Feedback feedback)
+	{
+		Feedback add=parentServ.giveFeedback(feedback,parentId);
+		return add;
+	}
+	
 }

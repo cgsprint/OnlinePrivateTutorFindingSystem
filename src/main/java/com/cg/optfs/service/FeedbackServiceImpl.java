@@ -22,9 +22,9 @@ public class FeedbackServiceImpl implements FeedbackService{
 	public Feedback addFeedback(int parentId, int tutorId, String rating) {
 		// TODO Auto-generated method stub
 		Feedback feedback= new Feedback();
-		feedback.setParentId(parentId);
-		feedback.setTutorId(tutorId);
-		feedback.setRating(rating);
+		//feedback.setParentId(parentId);
+		//feedback.setTutorId(tutorId);
+		//feedback.setRating(rating);
 		frepository.save(feedback);
 		return feedback;
 	}
