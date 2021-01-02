@@ -52,22 +52,21 @@ public class TutorServiceTest {
 
 	}
 
-	@Ignore
-	@Test
+	//@Ignore
+	//@Test
 	public void testViewTutor() {
 
 		Tutor tutor = new Tutor();
 		tutor.setUsername("man43");
 		tutor.setPassword("man435");
-		tutor.setTutorId(1);
 		tutor.setName("Mnaoj");
 		tutor.setSubject("English");
 		tutor.setQualifications("Bsc");
 		tutor.setAddress("Bhiwandi");
 
-		// Mockito.when(tutorRepo.findById(1).get()).thenReturn(tutor);
+		Mockito.when(tutorRepo.findById(tutor.getTutorId()).get()).thenReturn(tutor);
 
-		assertThat(tutorService.viewProfile(1)).isEqualTo(tutor);
+		assertThat(tutorService.viewProfile(tutor.getTutorId())).isEqualTo(tutor);
 		// assertEquals(1,tutorService.viewProfile(tutorId));
 
 	}

@@ -19,5 +19,10 @@ public interface TutorRepository extends JpaRepository<Tutor,Long> {
 
 	
 
+	
+	
+
+	
+
 
 }

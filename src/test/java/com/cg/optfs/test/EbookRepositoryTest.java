@@ -40,9 +40,9 @@ public class EbookRepositoryTest {
 		ebook.setAuthorname("Pro. kale");
 		ebook.setUrl("http://man536");
 		Ebook savedInDb=entityManager.persist(ebook);
-		//Ebook getFromDb=userJpaRepository.findOne(savedInDb.getEbookId());
+		Ebook getFromDb=userJpaRepository.findById(savedInDb.getEbookId()).get();
 		
-		//assertThat(getFromDb).isEqualTo(savedInDb);
+		assertThat(getFromDb).isEqualTo(savedInDb);
 		
 	}
 	

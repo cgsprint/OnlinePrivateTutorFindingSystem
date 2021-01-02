@@ -20,7 +20,7 @@ import com.cg.optfs.service.TutorService;
 
 
 @RestController
-@RequestMapping("/tutor")
+
 public class TutorController {
 
 	@Autowired
@@ -44,21 +44,26 @@ public class TutorController {
 
 	
 	
-	@PostMapping("/tutor/updateTutor")
-	public Tutor updateProfile(@RequestBody Tutor tutor) {
-
-		return tutorservice.updateProfile(tutor);
+	@PostMapping("/updateTutor")
+	public ResponseEntity<Tutor> updateProfile(@RequestBody Tutor tutor) {
+		Tutor tutor2= tutorservice.updateProfile(tutor);
+          if(tutor2!=null) {
+        	  return new ResponseEntity<Tutor>(tutor2, HttpStatus.OK);
+          }
+		return new ResponseEntity("Tutor update failed...", HttpStatus.NOT_FOUND);
 	}
 
-	@GetMapping("/tutor/viewTutor/{tutorId}")
+	@GetMapping("/viewTutor/{tutorId}")
 	public Tutor viewProfile(@PathVariable long tutorId) {
 
 		return tutorservice.viewProfile(tutorId);
 	}
 
-	@GetMapping("/tutor/request")
+	@GetMapping("/request")
 	public List<Request> getAllRequest() {
 
 		return tutorservice.getAllRequests();
 	}
+	
+
 }
