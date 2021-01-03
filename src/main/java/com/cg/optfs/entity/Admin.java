@@ -4,6 +4,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * Admin entity class
+ * @author TEJAS HATLE
+ * 
+ */
 @Entity
 @Table(name="admin")
 public class Admin {
@@ -16,7 +21,6 @@ public class Admin {
 	
 	public Admin() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Admin(int adminId, String adminName, String adminUsername, String adminPassword) {
