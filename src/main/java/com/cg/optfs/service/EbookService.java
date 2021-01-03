@@ -14,7 +14,7 @@ public interface EbookService {
 	public Ebook removeEbook(int ebookId);
 	public Ebook updateEbook(Ebook ebook);
 	public List<Ebook> getEbooklist();
-	public List<Ebook> getEbookbyTitle(String title);
-	public List<String> getEbookbyAuthor(String authorname);
+	public Ebook getEbookbyTitle(String title);
+	public Ebook getEbookbyAuthor(String authorname);
 
 }
