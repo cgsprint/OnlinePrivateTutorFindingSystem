@@ -78,11 +78,19 @@ public class EbookController {
 		return new  ResponseEntity<List<Ebook>>(getEbooklist, HttpStatus.OK);
 	}
 	
-	@GetMapping(value="/getEbook/{title}")
-	public ResponseEntity<List<Ebook>> getEbookbyTitle(@PathVariable("title") String title)
+	@GetMapping(value="/getEbook")
+	public ResponseEntity<Ebook> getEbookbyTitle(@RequestParam("title") String title)
 	{
-		List<Ebook> getEbookbyTitle= eservice.getEbookbyTitle(title);
+		Ebook ebook= eservice.getEbookbyTitle(title);
 		
-		return new  ResponseEntity<List<Ebook>>(getEbookbyTitle, HttpStatus.OK);
+		return new  ResponseEntity<Ebook>(ebook, HttpStatus.OK);
+	}
+	
+	@GetMapping(value="/getEbookauthor")
+	public ResponseEntity<Ebook> getEbookbyAuthor(@RequestParam("authorname") String authorname)
+	{
+		Ebook ebook= eservice.getEbookbyAuthor(authorname);
+		
+		return new  ResponseEntity<Ebook>(ebook, HttpStatus.OK);
 	}
 }

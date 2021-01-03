@@ -23,13 +23,12 @@ import com.cg.optfs.entity.Tutor;
 import com.cg.optfs.exception.EbookNotFoundException;
 import com.cg.optfs.exception.TutorNotFoundException;
 import com.cg.optfs.service.AdminService;
-import com.cg.optfs.service.EbookServiceImpl;
 
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
 	
-	private static final Logger LOGGER=LoggerFactory.getLogger(EbookServiceImpl.class);
+	private static final Logger LOGGER=LoggerFactory.getLogger(AdminController.class);
 	
 	@Autowired
 	AdminService adminServ;
