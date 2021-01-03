@@ -6,10 +6,16 @@ import java.time.LocalTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="Request")
@@ -19,8 +25,12 @@ public class Request {
 	@GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="requestId", length=10)
 	private int requestID;
-	@Column(name="parentId", length=10)
-	private int parentID;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(foreignKey = @ForeignKey(name = "parent_id"), name = "parentId")
+	@JsonIgnore
+	private Parent parent;
+
 	@Column(name="tutorId", length=10)
 	private int tutorID;
 	@Column(name="subject", length=10)
@@ -42,12 +52,12 @@ public class Request {
 		this.requestID = requestID;
 	}
 
-	public int getParentID() {
-		return parentID;
+	public Parent getParent() {
+		return parent;
 	}
 
-	public void setParentID(int parentID) {
-		this.parentID = parentID;
+	public void setParent(Parent parent) {
+		this.parent = parent;
 	}
 
 	public int getTutorID() {
@@ -95,11 +105,11 @@ public class Request {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Request(int requestID, int parentID, int tutorID, String subject, LocalTime localTime, LocalDate localDate,
+	public Request(int requestID, Parent parent, int tutorID, String subject, LocalTime localTime, LocalDate localDate,
 			LocalDateTime localDateTime) {
 		super();
 		this.requestID = requestID;
-		this.parentID = parentID;
+		this.parent = parent;
 		this.tutorID = tutorID;
 		this.subject = subject;
 		this.localTime = localTime;
@@ -109,10 +119,11 @@ public class Request {
 
 	@Override
 	public String toString() {
-		return "Request [requestID=" + requestID + ", parentID=" + parentID + ", tutorID=" + tutorID + ", subject="
+		return "Request [requestID=" + requestID + ", parent=" + parent + ", tutorID=" + tutorID + ", subject="
 				+ subject + ", localTime=" + localTime + ", localDate=" + localDate + ", localDateTime=" + localDateTime
 				+ "]";
 	}
+
 	
 	
 	

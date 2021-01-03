@@ -6,21 +6,31 @@ import java.time.LocalTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
-@Table(name="BokedTutor")
+@Table(name="BookedTutor")
 public class BookedTutor {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="requestId", length=10)
-	private int requestId;
-	@Column(name="parentId", length=10)
-	private int parentId;
+	@Column(name="bookedId", length=10)
+	private int bookedId;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(foreignKey = @ForeignKey(name = "parent_id"), name = "parentId")
+	@JsonIgnore
+	private Parent parent;
+	
 	@Column(name="tutorId", length=10)
 	private int tutorId;
 	@Column(name="subject", length=10)
@@ -34,20 +44,20 @@ public class BookedTutor {
 	@Column(name = "local_date_time", columnDefinition = "TIMESTAMP")
 	private LocalDateTime localDateTime;
 
-	public int getRequestId() {
-		return requestId;
+	public int getBookedId() {
+		return bookedId;
 	}
 
-	public void setRequestId(int requestId) {
-		this.requestId = requestId;
+	public void setBookedId(int bookedId) {
+		this.bookedId = bookedId;
 	}
 
-	public int getParentId() {
-		return parentId;
+	public Parent getParent() {
+		return parent;
 	}
 
-	public void setParentId(int parentId) {
-		this.parentId = parentId;
+	public void setParent(Parent parent) {
+		this.parent = parent;
 	}
 
 	public int getTutorId() {
@@ -95,11 +105,11 @@ public class BookedTutor {
 		// TODO Auto-generated constructor stub
 	}
 
-	public BookedTutor(int requestId, int parentId, int tutorId, String subject, LocalTime localTime,
+	public BookedTutor(int bookedId, Parent parent, int tutorId, String subject, LocalTime localTime,
 			LocalDate localDate, LocalDateTime localDateTime) {
 		super();
-		this.requestId = requestId;
-		this.parentId = parentId;
+		this.bookedId = bookedId;
+		this.parent = parent;
 		this.tutorId = tutorId;
 		this.subject = subject;
 		this.localTime = localTime;
@@ -109,10 +119,11 @@ public class BookedTutor {
 
 	@Override
 	public String toString() {
-		return "BookedTutor [requestId=" + requestId + ", parentId=" + parentId + ", tutorId=" + tutorId + ", subject="
+		return "BookedTutor [bookedId=" + bookedId + ", parent=" + parent + ", tutorId=" + tutorId + ", subject="
 				+ subject + ", localTime=" + localTime + ", localDate=" + localDate + ", localDateTime=" + localDateTime
 				+ "]";
 	}
+	
 	
 	
 	

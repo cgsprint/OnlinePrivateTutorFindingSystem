@@ -7,13 +7,17 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cg.optfs.entity.BookedTutor;
 import com.cg.optfs.entity.Ebook;
 import com.cg.optfs.entity.Feedback;
 import com.cg.optfs.entity.Parent;
+import com.cg.optfs.entity.Request;
 import com.cg.optfs.entity.Tutor;
+import com.cg.optfs.repository.BookedTutorRepository;
 import com.cg.optfs.repository.EbookRepository;
 import com.cg.optfs.repository.FeedbackRepository;
 import com.cg.optfs.repository.ParentRepository;
+import com.cg.optfs.repository.RequestRepository;
 import com.cg.optfs.repository.TutorRepository;
 
 @Transactional
@@ -32,6 +36,11 @@ public class ParentServiceImpl implements ParentService {
 	@Autowired
 	private FeedbackRepository feedbackRepo;
 	
+	@Autowired
+	private RequestRepository requestRepo;
+	
+	@Autowired 
+	private BookedTutorRepository bookedRepo;
 	@Override
 	public Parent loginParent(String username, String password) {
 		// TODO Auto-generated method stub
@@ -86,6 +95,36 @@ public class ParentServiceImpl implements ParentService {
 		feed.setParent(parent);
 		Feedback addFeedback=feedbackRepo.save(feed);
 		return addFeedback;
+	}
+
+	@Override
+	public Request demoRequest(Request request, int parentId) {
+		// TODO Auto-generated method stub
+		Parent parent=parentRepo.getOne(parentId);
+		Request demo=new Request();
+		demo.setTutorID(request.getTutorID());
+		demo.setSubject(request.getSubject());
+		demo.setLocalDate(request.getLocalDate());
+		demo.setLocalTime(request.getLocalTime());
+		demo.setLocalDateTime(request.getLocalDateTime());
+		demo.setParent(parent);
+		Request addDemo=requestRepo.save(demo);
+		return addDemo;
+	}
+
+	@Override
+	public BookedTutor bookTutor(BookedTutor booking, int parentId) {
+		// TODO Auto-generated method stub
+		Parent parent=parentRepo.getOne(parentId);
+		BookedTutor booking1=new BookedTutor();
+		booking1.setTutorId(booking.getTutorId());
+		booking1.setSubject(booking.getSubject());
+		booking1.setLocalDate(booking.getLocalDate());
+		booking1.setLocalTime(booking.getLocalTime());
+		booking1.setLocalDateTime(booking.getLocalDateTime());
+		booking1.setParent(parent);
+		BookedTutor addBooking=bookedRepo.save(booking1);
+		return addBooking;
 	}
 
 }

@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.optfs.entity.Admin;
+import com.cg.optfs.entity.BookedTutor;
 import com.cg.optfs.entity.Ebook;
 import com.cg.optfs.entity.Feedback;
 import com.cg.optfs.entity.Parent;
+import com.cg.optfs.entity.Request;
 import com.cg.optfs.entity.Tutor;
 import com.cg.optfs.exception.TutorNotFoundException;
 import com.cg.optfs.service.ParentService;
@@ -95,4 +97,17 @@ public class ParentController {
 		return add;
 	}
 	
+	@PostMapping("/demoRequest/{parentId}")
+	public Request demoRequest(@PathVariable int parentId,@RequestBody Request request)
+	{
+		Request add=parentServ.demoRequest(request,parentId);
+		return add;
+	}
+	
+	@PostMapping("/bookTutor/{parentId}")
+	public BookedTutor bookTutor(@PathVariable int parentId,@RequestBody BookedTutor booking)
+	{
+		BookedTutor add=parentServ.bookTutor(booking,parentId);
+		return add;
+	}
 }
