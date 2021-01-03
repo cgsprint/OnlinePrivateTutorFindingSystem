@@ -44,6 +44,35 @@ public class EbookServiceTest {
 
 	
 	@Test
+	public void testGetByTitleEbook() {
+
+		Ebook ebook = new Ebook();
+		ebook.setTitle("Data");
+		ebook.setAuthorname("Pro. kale");
+		ebook.setUrl("http://man536");
+
+		Mockito.when(ebookRepo.getEbookbyTitle("Data")).thenReturn(ebook);
+		 assertThat(ebookService.getEbookbyTitle("Data")).isEqualTo(ebook);
+		
+
+	}
+	
+	
+	@Test
+	public void testGetByAuthorEbook() {
+
+		Ebook ebook = new Ebook();
+		ebook.setTitle("Data");
+		ebook.setAuthorname("Kale");
+		ebook.setUrl("http://man536");
+
+		Mockito.when(ebookRepo.getEbookbyAuthor("Kale")).thenReturn(ebook);
+		 assertThat(ebookService.getEbookbyAuthor("Kale")).isEqualTo(ebook);
+		
+
+	}
+	
+	@Test
 	public void testUpdateEbook() {
 
 		Ebook ebook = new Ebook();
