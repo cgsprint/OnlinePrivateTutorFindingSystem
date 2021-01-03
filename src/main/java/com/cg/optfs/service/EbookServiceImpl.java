@@ -58,16 +58,16 @@ public class EbookServiceImpl implements EbookService{
 		return list;
 	}
 	@Override
-	public List<Ebook> getEbookbyTitle(String title) {
+	public Ebook getEbookbyTitle(String title) {
 		// TODO Auto-generated method stub
-		List<Ebook> elist= erepository.getEbooksbyTitle(title);
-		return elist;
+		Ebook ebook= erepository.getEbookbyTitle(title);
+		return ebook;
 	}
 	@Override
-	public List<String> getEbookbyAuthor(String authorname) {
+	public Ebook getEbookbyAuthor(String authorname) {
 		// TODO Auto-generated method stub
-		List<String> elist= erepository.getEbooksbyAuthor(authorname);
-		return elist;
+		Ebook ebook= erepository.getEbookbyAuthor(authorname);
+		return ebook;
 	}
 
 	
