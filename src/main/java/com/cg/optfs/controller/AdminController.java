@@ -47,7 +47,7 @@ public class AdminController {
 			LOGGER.info("Login successfull");
 			return new ResponseEntity("Login successfull", HttpStatus.OK);
 		}
-		LOGGER.error("Error 404...");
+		LOGGER.error("Error: Enter correct username and password.");
 		return new ResponseEntity("Login Failed", HttpStatus.NOT_FOUND);
 		
 	}
@@ -76,6 +76,8 @@ public class AdminController {
 	public ResponseEntity<Tutor> updateTutor(@RequestParam("id") Long Id,@RequestBody Tutor tutor)throws TutorNotFoundException
 	{
 		LOGGER.trace("Entering into method updateTutor");
+		
+		LOGGER.error("Error: Enter correct tutorId");
 		
 //		Optional<Tutor> tu =  adminServ.getTutorById(Id); 
 		Tutor tu = adminServ.getTutorById(Id).orElseThrow(()-> new TutorNotFoundException("Tutor does not exist with id"+Id));
@@ -110,6 +112,8 @@ public class AdminController {
 	{
 		LOGGER.trace("Entering into method deleteTutor");
 		
+		LOGGER.error("Error: Enter correct tutorId");
+		
 		Tutor tu = adminServ.getTutorById(Id).orElseThrow(()->new TutorNotFoundException("Tutor does not exist with id "+Id));
 		adminServ.deleteTutor(tu);
 		
@@ -142,6 +146,8 @@ public class AdminController {
 	{
 		LOGGER.trace("Entering into method updateEbook");
 		
+		LOGGER.error("Error: Entered correct EbookId");
+		
 		Ebook eb = adminServ.getEbookById(Id).orElseThrow(()-> new EbookNotFoundException("Ebook does not exist with id "+Id));
 		if(eb != null)
 		{
@@ -160,6 +166,7 @@ public class AdminController {
 			
 			return new ResponseEntity<Ebook>(eb2, HttpStatus.OK);
 		}
+		
 		
 		return new ResponseEntity("No Such Ebook Found!", HttpStatus.NOT_FOUND);
 	}

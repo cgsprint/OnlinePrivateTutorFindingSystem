@@ -46,7 +46,7 @@ public class TutorController {
 			return new ResponseEntity("Login successfull", HttpStatus.OK);
 		}
 		
-		LOGGER.error("Error 404");
+		LOGGER.error("Error: Enter correct username and password");
 		
 		return new ResponseEntity("Login Failed", HttpStatus.NOT_FOUND);
 		
