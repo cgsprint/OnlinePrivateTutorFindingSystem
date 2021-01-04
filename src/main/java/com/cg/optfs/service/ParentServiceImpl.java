@@ -74,9 +74,9 @@ public class ParentServiceImpl implements ParentService {
 	}
 
 	@Override
-	public Parent getParentById(Integer id) {
+	public Optional<Parent> getParentById(Integer id) {
 		// TODO Auto-generated method stub
-		return parentRepo.findById(id).get();
+		return parentRepo.findById(id);
 	}
 
 	@Override

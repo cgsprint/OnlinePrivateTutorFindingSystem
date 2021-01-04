@@ -57,4 +57,13 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<String> handleException(Exception ex){
 		return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
 	}
+	
+	@ExceptionHandler(ParentNotFoundException.class)
+	public ResponseEntity<ExceptionResponse> handleParentNotFoundException(ParentNotFoundException ex)
+	{
+		ExceptionResponse er = new ExceptionResponse();
+		er.setErrorCode(HttpStatus.NOT_FOUND.value());
+		er.setErrorMessage(ex.getMessage());
+		return new ResponseEntity<>(er,HttpStatus.NOT_FOUND);
+	}
 }

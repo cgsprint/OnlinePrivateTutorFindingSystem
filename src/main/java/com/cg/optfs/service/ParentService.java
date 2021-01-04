@@ -22,7 +22,7 @@ public interface ParentService {
 
 	public List<Tutor> viewAllTutor();
 
-	public Parent getParentById(Integer id);
+	public Optional<Parent> getParentById(Integer id);
 
 	public List<Ebook> viewEbook();
 

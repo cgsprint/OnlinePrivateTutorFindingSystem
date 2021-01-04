@@ -22,6 +22,7 @@ import com.cg.optfs.entity.Feedback;
 import com.cg.optfs.entity.Parent;
 import com.cg.optfs.entity.Request;
 import com.cg.optfs.entity.Tutor;
+import com.cg.optfs.exception.ParentNotFoundException;
 import com.cg.optfs.exception.TutorNotFoundException;
 import com.cg.optfs.service.ParentService;
 
@@ -61,15 +62,22 @@ public class ParentController {
 	}
 	
 	@GetMapping("/{parentId}")
-	public Parent viewParent(@PathVariable Integer parentId)
+	public  ResponseEntity<Parent> viewParent(@PathVariable Integer parentId)throws ParentNotFoundException
 	{
-		return parentServ.viewParent(parentId);
+		Parent pa= parentServ.getParentById(parentId).orElseThrow(()-> new ParentNotFoundException("Parent does not exist with id"+parentId));
+		if(pa!=null)
+		{
+			return new ResponseEntity<Parent>(pa, HttpStatus.OK);
+		}
+		return new ResponseEntity("No Such Parent Found!", HttpStatus.NOT_FOUND);
 	}
 	
 	@PutMapping("/updateParent")
-	public Parent updateParent(@RequestParam("id") Integer Id,@RequestBody Parent parent)
+	public ResponseEntity<Parent> updateParent(@RequestParam("id") Integer Id,@RequestBody Parent parent)throws ParentNotFoundException
 	{
-		Parent pa =parentServ.getParentById(Id);
+		Parent pa =parentServ.getParentById(Id).orElseThrow(()-> new ParentNotFoundException("Parent does not exist with id"+Id));
+		if(pa!=null)
+		{
 			pa.setFirstName(parent.getFirstName());
 			pa.setLastName(parent.getLastName());
 			pa.setMobileNo(parent.getMobileNo());
@@ -78,8 +86,15 @@ public class ParentController {
 			pa.setUsername(parent.getUsername());
 			pa.setPassword(parent.getPassword());
 			Parent pa1=parentServ.updateParent(pa);
-			return pa1;
-	}
+			if(pa1==null)
+			{
+				return new ResponseEntity("Failed to update parent", HttpStatus.NOT_FOUND);
+				}
+			return new ResponseEntity<Parent>(pa1, HttpStatus.OK);
+			}
+			
+			return new ResponseEntity("No Such Parent Found!", HttpStatus.NOT_FOUND);
+		}
 	@GetMapping("/viewAllTutor")
 	public List<Tutor> viewAllTutor(){
 		return parentServ.viewAllTutor();
@@ -91,23 +106,35 @@ public class ParentController {
 	}
 	
 	@PostMapping("/giveFeedback/{parentId}")
-	public Feedback giveFeedback(@PathVariable int parentId,@RequestBody Feedback feedback)
+	public ResponseEntity<Feedback> giveFeedback(@PathVariable int parentId,@RequestBody Feedback feedback)
 	{
 		Feedback add=parentServ.giveFeedback(feedback,parentId);
-		return add;
+		if(add!=null)
+		{
+			return new ResponseEntity<Feedback>(add, HttpStatus.OK);
+		}
+		return new ResponseEntity("Unable to add a Feedback!", HttpStatus.NOT_FOUND);
 	}
 	
 	@PostMapping("/demoRequest/{parentId}")
-	public Request demoRequest(@PathVariable int parentId,@RequestBody Request request)
+	public ResponseEntity<Request> demoRequest(@PathVariable int parentId,@RequestBody Request request)
 	{
 		Request add=parentServ.demoRequest(request,parentId);
-		return add;
+		if(add!=null)
+		{
+			return new ResponseEntity<Request>(add, HttpStatus.OK);
+		}
+		return new ResponseEntity("Unable to request a demo lecture!", HttpStatus.NOT_FOUND);
 	}
 	
 	@PostMapping("/bookTutor/{parentId}")
-	public BookedTutor bookTutor(@PathVariable int parentId,@RequestBody BookedTutor booking)
+	public ResponseEntity<BookedTutor> bookTutor(@PathVariable int parentId,@RequestBody BookedTutor booking)
 	{
 		BookedTutor add=parentServ.bookTutor(booking,parentId);
-		return add;
+		if(add!=null)
+		{
+			return new ResponseEntity<BookedTutor>(add, HttpStatus.OK);
+		}
+		return new ResponseEntity("Unable to book a tutor!", HttpStatus.NOT_FOUND);
 	}
 }
