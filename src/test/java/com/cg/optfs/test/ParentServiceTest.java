@@ -1,6 +1,7 @@
 package com.cg.optfs.test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,23 @@ public class ParentServiceTest {
 	private ParentService parentService;
 	@MockBean
 	private ParentRepository parentRepo;
+	
+	@Test
+	public void testLoginAdmin() 
+	{
+		Parent parent=new Parent();
+		parent.setFirstName("Manoj");
+		parent.setLastName("Chaudhary");
+		parent.setUsername("man43");
+		parent.setPassword("man453");
+		parent.setAddress("Thane");
+		parent.setMobileNo("7040760465");
+		parent.setEmail("manojc@gmail.com");
+		
+		Mockito.when(parentRepo.loginParent("man43", "man435")).thenReturn(parent);
+
+		assertThat(parentService.loginParent("man43", "man435")).isEqualTo(parent);
+	}
 	
 	@Test
 	public void testAddParent() {
@@ -67,5 +85,26 @@ public class ParentServiceTest {
 			assertThat(parentService.viewAllTutor()).isEqualTo(list);
 			
 		}
+	
+	@Test
+	public void testGetByIdParent() {
+		Parent parent=new Parent();
+		parent.setParentId(4);
+		parent.setFirstName("Gaurav");
+		parent.setLastName("Patil");
+		parent.setUsername("ga43");
+		parent.setPassword("ga43");
+		parent.setAddress("Bhiwandi");
+		parent.setMobileNo("7040760465");
+		parent.setEmail("vinodc@gmail.com");
+		
+		Mockito.when(parentRepo.getOne((int) 4)).thenReturn(parent);
+		Mockito.when(parentRepo.existsById(parent.getParentId())).thenReturn(false);
+		assertFalse(parentRepo.existsById(parent.getParentId()));
+		
+		//Mockito.when(parentRepo.save(parent)).thenReturn(parent);
+		// assertThat(parentService.addParent(parent)).isEqualTo(parent);
+	
+	}
 	
 }

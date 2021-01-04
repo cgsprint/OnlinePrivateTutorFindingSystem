@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cg.optfs.entity.BookedTutor;
 import com.cg.optfs.entity.Request;
 import com.cg.optfs.entity.Tutor;
+import com.cg.optfs.repository.BookedTutorRepository;
 import com.cg.optfs.repository.RequestRepository;
 import com.cg.optfs.repository.TutorRepository;
 @Service
@@ -16,6 +18,8 @@ public class TutorServiceImpl implements TutorService{
 	public TutorRepository tutorRepo;
 	@Autowired
 	public RequestRepository requestRepo;
+	@Autowired
+	public BookedTutorRepository bookedRepo;
 	
 	@Override
 	public Tutor loginTutor(String username,String password) {
@@ -40,6 +44,13 @@ public class TutorServiceImpl implements TutorService{
 	public List<Request> getAllRequests() {
 		// TODO Auto-generated method stub
 		return requestRepo.findAll();
+	}
+
+
+	@Override
+	public List<BookedTutor> getBookedTutor() {
+		// TODO Auto-generated method stub
+		return bookedRepo.findAll();
 	}
 
 }
