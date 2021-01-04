@@ -35,7 +35,7 @@ public class Parent {
 	private String username;
 	
 	@NotNull(message="password can not be null")
-	@Size(min=8,max=16, message="password must be equal to or greater than 8")
+	@Size(min=8,max=16, message="password must be equal or greater than 8")
 	@Column(name="Password")
 	private String password;
 	

@@ -22,15 +22,15 @@ public class Tutor {
 	private long  tutorId;
     
     @NotNull(message="Name can not be null")
-   	@Size(min=2, message="Name must not be less than 2 characters")
+   	@Size(min=2, message="Name must not be less than 2 characters.")
     private String name;
     
     @NotNull(message="UserName can not be null")
-   	@Size(min=2, message="UserName must not be less than 2 characters")
+   	@Size(min=2, message="UserName must not be less than 2 characters..")
     private String username;
     
     @NotNull(message="Password can not be null")
-  	@Size(min=8,max=16, message="Password must be equal to or greater than 8")
+  	@Size(min=8,max=16, message="Password must be equal  or greater than 8")
     private String password;
     
     @NotNull(message="Subject can not be null")
@@ -41,10 +41,10 @@ public class Tutor {
     @Pattern(regexp="(^$|[0-9]{10})")
 	private String phoneNumber;
     
-    @NotNull(message="Address can not be null")
+    @NotNull(message="Address can not be null.")
 	private String address;
     
-    @NotNull(message="qualifications can not be null")
+    @NotNull(message="qualifications can not be null.")
 	private String qualifications;
     
 	@OneToMany(cascade=CascadeType.ALL)
