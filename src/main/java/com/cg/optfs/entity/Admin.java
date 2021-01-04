@@ -15,6 +15,8 @@ public class Admin {
 	
 	@Id
 	private int adminId;
+	
+	
 	private String adminName;
 	private String adminUsername;
 	private String adminPassword;

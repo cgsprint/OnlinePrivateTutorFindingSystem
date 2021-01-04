@@ -10,6 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="TUTOR")
@@ -17,13 +20,33 @@ public class Tutor {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
 	private long  tutorId;
+    
+    @NotNull(message="Name can not be null")
+   	@Size(min=2, message="Name must not be less than 2 characters")
     private String name;
+    
+    @NotNull(message="UserName can not be null")
+   	@Size(min=2, message="UserName must not be less than 2 characters")
     private String username;
+    
+    @NotNull(message="Password can not be null")
+  	@Size(min=8,max=16, message="Password must be equal to or greater than 8")
     private String password;
+    
+    @NotNull(message="Subject can not be null")
 	private String subject;
+    
+    @NotNull(message="phoneNumber can not be null")
+ // @Size(min=10,max=10)
+    @Pattern(regexp="(^$|[0-9]{10})")
 	private String phoneNumber;
+    
+    @NotNull(message="Address can not be null")
 	private String address;
+    
+    @NotNull(message="qualifications can not be null")
 	private String qualifications;
+    
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name="rId",referencedColumnName="tutorId")
     private List<Request> requestList;
