@@ -2,6 +2,8 @@ package com.cg.optfs.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,13 +37,13 @@ public class AdminController {
 	
 	
 	@PostMapping("/login")
-	public ResponseEntity<Admin> loginAdmin(@RequestParam("username") String Username,
-			@RequestParam("password") String Password)
+	public ResponseEntity<Admin> loginAdmin(@Valid @RequestParam("username") String username,
+			@RequestParam("password") String password)
 	{
 		LOGGER.trace("Entering into method loginAdmin");
 		
 		
-		Admin admin = adminServ.loginAdmin(Username,Password);
+		Admin admin = adminServ.loginAdmin(username,password);
 		if(admin != null)
 		{
 			LOGGER.info("Login successfull");
@@ -54,7 +56,7 @@ public class AdminController {
 	
 
 	@PostMapping("/addTutor")
-	public ResponseEntity<Tutor> addTutor(@RequestBody Tutor tutor)
+	public ResponseEntity<Tutor> addTutor(@Valid @RequestBody Tutor tutor)
 	{
 		LOGGER.trace("Entering into method addTutor");
 		
@@ -73,11 +75,11 @@ public class AdminController {
 	
 	
 	@PutMapping("/updateTutor")
-	public ResponseEntity<Tutor> updateTutor(@RequestParam("id") Long Id,@RequestBody Tutor tutor)throws TutorNotFoundException
+	public ResponseEntity<Tutor> updateTutor(@Valid @RequestParam("id") Long Id,@RequestBody Tutor tutor)throws TutorNotFoundException
 	{
 		LOGGER.trace("Entering into method updateTutor");
 		
-		LOGGER.error("Error: Enter correct tutorId");
+		
 		
 //		Optional<Tutor> tu =  adminServ.getTutorById(Id); 
 		Tutor tu = adminServ.getTutorById(Id).orElseThrow(()-> new TutorNotFoundException("Tutor does not exist with id"+Id));
@@ -108,13 +110,13 @@ public class AdminController {
 	}
 	
 	@DeleteMapping("/deleteTutor")
-	public String deleteTutor(@RequestParam("id") Long Id)throws TutorNotFoundException
+	public String deleteTutor(@RequestParam("id") Long id)throws TutorNotFoundException
 	{
 		LOGGER.trace("Entering into method deleteTutor");
 		
-		LOGGER.error("Error: Enter correct tutorId");
 		
-		Tutor tu = adminServ.getTutorById(Id).orElseThrow(()->new TutorNotFoundException("Tutor does not exist with id "+Id));
+		
+		Tutor tu = adminServ.getTutorById(id).orElseThrow(()->new TutorNotFoundException("Tutor does not exist with id "+id));
 		adminServ.deleteTutor(tu);
 		
 		LOGGER.info("Tutor deleted successfully");
@@ -142,13 +144,13 @@ public class AdminController {
 	}
 	
 	@PutMapping("/updateEbook")
-	public ResponseEntity<Ebook> updateEbook(@RequestParam("id") int Id,@RequestBody Ebook ebook)throws EbookNotFoundException
+	public ResponseEntity<Ebook> updateEbook(@RequestParam("id") int id,@RequestBody Ebook ebook)throws EbookNotFoundException
 	{
 		LOGGER.trace("Entering into method updateEbook");
 		
-		LOGGER.error("Error: Entered correct EbookId");
 		
-		Ebook eb = adminServ.getEbookById(Id).orElseThrow(()-> new EbookNotFoundException("Ebook does not exist with id "+Id));
+		
+		Ebook eb = adminServ.getEbookById(id).orElseThrow(()-> new EbookNotFoundException("Ebook does not exist with id "+id));
 		if(eb != null)
 		{
 			
@@ -172,13 +174,13 @@ public class AdminController {
 	}
 	
 	@DeleteMapping("/deleteEbook")
-	public String deleteEbook(@RequestParam("id") int Id)throws EbookNotFoundException
+	public String deleteEbook(@RequestParam("id") int id)throws EbookNotFoundException
 	{
 		LOGGER.trace("Entering into method deleteEbook");
 		
 		LOGGER.error("Error 404");
 		
-		Ebook eb = adminServ.getEbookById(Id).orElseThrow(()->new EbookNotFoundException("Ebook does not exist with id "+Id));
+		Ebook eb = adminServ.getEbookById(id).orElseThrow(()->new EbookNotFoundException("Ebook does not exist with id "+id));
 		adminServ.deleteEbook(eb);
 		
 		LOGGER.info("Ebook deleted");

@@ -2,6 +2,8 @@ package com.cg.optfs.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,20 +35,20 @@ public class TutorController {
 	
 	
 	@PostMapping("/logintutor")
-	public ResponseEntity<Tutor> loginTutor(@RequestParam("username") String Username,
-			@RequestParam("password") String Password)
+	public ResponseEntity<Tutor> loginTutor(@Valid @RequestParam("username") String username,
+			@RequestParam("password") String password)
 	{
 		LOGGER.trace("Entering into method loginTutor");
 		
-		Tutor tutor = tutorservice.loginTutor(Username,Password);
+		Tutor tutor = tutorservice.loginTutor(username,password);
 		if(tutor != null)
 		{
-			LOGGER.info("Login successful for Tutor");
+			LOGGER.info("Login successful for Tutor..");
 			
 			return new ResponseEntity("Login successfull", HttpStatus.OK);
 		}
 		
-		LOGGER.error("Error: Enter correct username and password");
+		LOGGER.error("Error: Enter correct username and password..");
 		
 		return new ResponseEntity("Login Failed", HttpStatus.NOT_FOUND);
 		
@@ -56,7 +58,7 @@ public class TutorController {
 	
 	
 	@PostMapping("/updateTutor")
-	public ResponseEntity<Tutor> updateProfile(@RequestBody Tutor tutor) {
+	public ResponseEntity<Tutor> updateProfile(@Valid @RequestBody Tutor tutor) {
 		
 		LOGGER.trace("Entering into method updateProfile");
 		

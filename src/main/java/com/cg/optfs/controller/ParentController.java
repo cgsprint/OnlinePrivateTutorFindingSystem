@@ -3,6 +3,8 @@ package com.cg.optfs.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,11 +46,11 @@ public class ParentController {
 	}
 	
 	@PostMapping("/login")
-	public ResponseEntity<Parent> loginParent(@RequestParam("username") String Username,@RequestParam("password") String Password)
+	public ResponseEntity<Parent> loginParent(@Valid @RequestParam("username") String username,@RequestParam("password") String password)
 	{
 		LOGGER.trace("Entering into method loginParent");
 		
-		Parent parent = parentServ.loginParent(Username,Password);
+		Parent parent = parentServ.loginParent(username,password);
 		if(parent != null)
 		{
 			LOGGER.info("Login succesfull for Parent.");
@@ -62,7 +64,7 @@ public class ParentController {
 	}
 	
 	@PostMapping("/register")
-	public ResponseEntity<Parent> addParent(@RequestBody Parent parent)
+	public ResponseEntity<Parent> addParent(@Valid @RequestBody Parent parent)
 	{
 		LOGGER.trace("Entering into method addParent.");
 		
@@ -84,7 +86,7 @@ public class ParentController {
 	{
 		LOGGER.trace("Entering into method viewParent.");
 		
-		LOGGER.error("Error: Enter correct parentId");
+		
 		
 		Parent pa= parentServ.getParentById(parentId).orElseThrow(()-> new ParentNotFoundException("Parent does not exist with id"+parentId));
 		if(pa!=null)
@@ -93,17 +95,17 @@ public class ParentController {
 			return new ResponseEntity<Parent>(pa, HttpStatus.OK);
 		}
 		
-		LOGGER.error("Error 404...");
+		LOGGER.error("Error: Parent not found...");
 		return new ResponseEntity("No Such Parent Found!", HttpStatus.NOT_FOUND);
 	}
 	
 	@PutMapping("/updateParent")
-	public ResponseEntity<Parent> updateParent(@RequestParam("id") Integer Id,@RequestBody Parent parent)throws ParentNotFoundException
+	public ResponseEntity<Parent> updateParent(@Valid @RequestParam("id") Integer id,@RequestBody Parent parent)throws ParentNotFoundException
 	{
 		LOGGER.trace("Entering into method updateParent.");
 		
-		LOGGER.error("Error: Enter correct parentId.");
-		Parent pa =parentServ.getParentById(Id).orElseThrow(()-> new ParentNotFoundException("Parent does not exist with id"+Id));
+		
+		Parent pa =parentServ.getParentById(id).orElseThrow(()-> new ParentNotFoundException("Parent does not exist with id"+id));
 		if(pa!=null)
 		{
 			LOGGER.info("Updating Parent.");
@@ -124,7 +126,7 @@ public class ParentController {
 			return new ResponseEntity<Parent>(pa1, HttpStatus.OK);
 			}
 			
-			LOGGER.error("Error 404");
+			LOGGER.error("Error: Parent not found..");
 			return new ResponseEntity("No Such Parent Found!", HttpStatus.NOT_FOUND);
 		}
 	@GetMapping("/viewAllTutor")
