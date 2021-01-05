@@ -26,6 +26,12 @@ import com.cg.optfs.exception.EbookNotFoundException;
 import com.cg.optfs.exception.TutorNotFoundException;
 import com.cg.optfs.service.AdminService;
 
+
+/**
+ * This is Admin Controller class
+ * @author TEJAS HATLE
+ * 
+ */
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
@@ -35,6 +41,9 @@ public class AdminController {
 	@Autowired
 	AdminService adminServ;
 	
+	// =======================================================
+	//						Admin Login
+	// =======================================================
 	
 	@PostMapping("/login")
 	public ResponseEntity<Admin> loginAdmin(@Valid @RequestParam("username") String username,
@@ -54,7 +63,10 @@ public class AdminController {
 		
 	}
 	
-
+	// =======================================================
+	//						Add tutor
+	// =======================================================
+		
 	@PostMapping("/addTutor")
 	public ResponseEntity<Tutor> addTutor(@Valid @RequestBody Tutor tutor)
 	{
@@ -73,6 +85,10 @@ public class AdminController {
 		
 	}
 	
+	// =======================================================
+	//						Update Tutor
+	// =======================================================
+		
 	
 	@PutMapping("/updateTutor")
 	public ResponseEntity<Tutor> updateTutor(@Valid @RequestParam("id") Long id,@RequestBody Tutor tutor)throws TutorNotFoundException
@@ -109,6 +125,10 @@ public class AdminController {
 		
 	}
 	
+	// =======================================================
+	//						Delete Tutor
+	// =======================================================
+		
 	@DeleteMapping("/deleteTutor")
 	public String deleteTutor(@RequestParam("id") Long id)throws TutorNotFoundException
 	{
@@ -123,6 +143,11 @@ public class AdminController {
 		
 		return "Tutor deleted...";
 	}
+	
+	// =======================================================
+	//						Add Ebook
+	// =======================================================
+		
 	
 	@PostMapping("/addEbook")
 	public ResponseEntity<Ebook> addEbook(@RequestBody Ebook ebook)
@@ -142,6 +167,11 @@ public class AdminController {
 		return new ResponseEntity("Failed to add ebook", HttpStatus.NOT_FOUND);
 		
 	}
+	
+	// =======================================================
+	//						Update Ebook
+	// =======================================================
+		
 	
 	@PutMapping("/updateEbook")
 	public ResponseEntity<Ebook> updateEbook(@RequestParam("id") int id,@RequestBody Ebook ebook)throws EbookNotFoundException
@@ -173,6 +203,10 @@ public class AdminController {
 		return new ResponseEntity("No Such Ebook Found!", HttpStatus.NOT_FOUND);
 	}
 	
+	// =======================================================
+	//						Delete Ebook
+	// =======================================================
+		
 	@DeleteMapping("/deleteEbook")
 	public String deleteEbook(@RequestParam("id") int id)throws EbookNotFoundException
 	{
@@ -187,6 +221,11 @@ public class AdminController {
 		
 		return "Ebook deleted...";
 	}
+	
+	// =======================================================
+	//						View Parents
+	// =======================================================
+		
 	
 	@GetMapping("/viewParents")
 	public List<Parent> viewParents()

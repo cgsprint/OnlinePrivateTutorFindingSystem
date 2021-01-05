@@ -3,6 +3,9 @@ package com.cg.optfs.entity;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 
 /**
  * Admin entity class
@@ -18,7 +21,9 @@ public class Admin {
 	
 	
 	private String adminName;
+	
 	private String adminUsername;
+	
 	private String adminPassword;
 	
 	public Admin() {

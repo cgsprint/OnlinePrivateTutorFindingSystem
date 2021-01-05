@@ -45,7 +45,7 @@ class AdminRepositoryTest {
 	public void testSaveTutor()
 	{
 		Tutor tutor = getTutor();
-		Tutor savedTutor = entityManager.persist(tutor);
+		Tutor savedTutor = tutorRepo.save(tutor);
 		Tutor getFromDb = tutorRepo.getOne(savedTutor.getTutorId());
 		
 		assertThat(getFromDb).isEqualTo(savedTutor);

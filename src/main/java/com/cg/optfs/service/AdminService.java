@@ -11,7 +11,11 @@ import com.cg.optfs.entity.Ebook;
 import com.cg.optfs.entity.Parent;
 import com.cg.optfs.entity.Tutor;
 
-
+/**
+ * This is AdminService Interface 
+ * @author TEJAS HATLE
+ *
+ */
 public interface AdminService {
 	
 	/**
