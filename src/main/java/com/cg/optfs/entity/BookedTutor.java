@@ -16,7 +16,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
+/**
+ * BookedTutor Entity Class
+ * @author CHANCHAL
+ *
+ */
 @Entity
 @Table(name="BookedTutor")
 public class BookedTutor {

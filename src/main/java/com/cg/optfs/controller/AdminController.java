@@ -75,14 +75,14 @@ public class AdminController {
 	
 	
 	@PutMapping("/updateTutor")
-	public ResponseEntity<Tutor> updateTutor(@Valid @RequestParam("id") Long Id,@RequestBody Tutor tutor)throws TutorNotFoundException
+	public ResponseEntity<Tutor> updateTutor(@Valid @RequestParam("id") Long id,@RequestBody Tutor tutor)throws TutorNotFoundException
 	{
 		LOGGER.trace("Entering into method updateTutor");
 		
 		
 		
 //		Optional<Tutor> tu =  adminServ.getTutorById(Id); 
-		Tutor tu = adminServ.getTutorById(Id).orElseThrow(()-> new TutorNotFoundException("Tutor does not exist with id"+Id));
+		Tutor tu = adminServ.getTutorById(id).orElseThrow(()-> new TutorNotFoundException("Tutor does not exist with id"+id));
 		if(tu != null)
 		{
 			LOGGER.info("Tutor updated successfully");
