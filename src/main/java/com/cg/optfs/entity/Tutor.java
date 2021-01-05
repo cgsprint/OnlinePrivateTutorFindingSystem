@@ -13,7 +13,11 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-
+/**
+ * This Tutor entity class
+ * @author Manoj
+ *
+ */
 @Entity
 @Table(name="TUTOR")
 public class Tutor {

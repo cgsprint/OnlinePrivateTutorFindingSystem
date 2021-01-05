@@ -12,19 +12,23 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cg.optfs.entity.BookedTutor;
+import com.cg.optfs.entity.Booking;
 import com.cg.optfs.entity.Request;
 import com.cg.optfs.entity.Tutor;
 import com.cg.optfs.service.TutorService;
 
-
+/**
+ * This is Tutor Controller class
+ * @author Manoj
+ * 
+ */
 
 @RestController
-
 public class TutorController {
 
 	private static final Logger LOGGER=LoggerFactory.getLogger(TutorController.class);
@@ -32,7 +36,12 @@ public class TutorController {
 	@Autowired
 	public TutorService tutorservice;
 	
-	
+	/**
+	 * 
+	 * @param username
+	 * @param password
+	 * @return
+	 */
 	
 	@PostMapping("/logintutor")
 	public ResponseEntity<Tutor> loginTutor(@Valid @RequestParam("username") String username,
@@ -54,10 +63,13 @@ public class TutorController {
 		
 	}
 	
-
+	/**
+	 * 
+	 * @param tutor
+	 * @return Tutor
+	 */
 	
-	
-	@PostMapping("/updateTutor")
+	@PutMapping("/updateTutor")
 	public ResponseEntity<Tutor> updateProfile(@Valid @RequestBody Tutor tutor) {
 		
 		LOGGER.trace("Entering into method updateProfile");
@@ -74,7 +86,12 @@ public class TutorController {
           
 		return new ResponseEntity("Tutor update failed...", HttpStatus.NOT_FOUND);
 	}
-
+     
+	/**
+	 * 
+	 * @param tutorId
+	 * @return Tutor
+	 */
 	@GetMapping("/viewTutor/{tutorId}")
 	public Tutor viewProfile(@PathVariable long tutorId) {
 
@@ -83,7 +100,11 @@ public class TutorController {
 		LOGGER.info("Tutorprofile is found");
 		return tutorservice.viewProfile(tutorId);
 	}
-
+	
+    /**
+     * 
+     * @return Request
+     */
 	@GetMapping("/request")
 	public List<Request> getAllRequest() {
 		
@@ -95,13 +116,13 @@ public class TutorController {
 	}
 	
 	@GetMapping("/bookedTutor")
-	public List<BookedTutor> getBookedTutor() {
+	public List<Booking> getBooking() {
 		
 		LOGGER.trace("Entering into method getAllRequest");
 		
 		LOGGER.info("Requests found for Tutor");
 		
-		return tutorservice.getBookedTutor();
+		return tutorservice.getBooking();
 	}
 	
 

@@ -50,7 +50,9 @@ public class TutorRepositoryTest {
 			tutor.setAddress("thane");
 		    
 		    Tutor savedInDB=entityManager.persist(tutor);
+		    Tutor getFromDb = tutorRepo.getOne(savedInDB.getTutorId());
 			
+			assertThat(getFromDb).isEqualTo(savedInDB);
 		}
 	
 	

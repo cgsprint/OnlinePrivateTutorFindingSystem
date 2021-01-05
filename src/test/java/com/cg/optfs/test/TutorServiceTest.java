@@ -37,14 +37,14 @@ public class TutorServiceTest {
 	private RequestService requestService;
 	
 	@Test
-	public void testLoginAdmin() 
+	public void testLoginTutor() 
 	{
 		Tutor tutor = new Tutor();
 		tutor.setUsername("man43");
 		tutor.setPassword("man435");
-		tutor.setName("man43");
-		tutor.setSubject("man43");
-		tutor.setQualifications("man43");
+		tutor.setName("Manoj");
+		tutor.setSubject("MAths");
+		tutor.setQualifications("BscIt");
 		tutor.setAddress("thane");
 		
 		Mockito.when(tutorRepo.loginTutor("man43", "man435")).thenReturn(tutor);
@@ -69,8 +69,8 @@ public class TutorServiceTest {
 
 	}
 
-	//@Ignore
-	//@Test
+
+	@Test
 	public void testViewTutor() {
 
 		Tutor tutor = new Tutor();
@@ -85,12 +85,7 @@ public class TutorServiceTest {
 		Mockito.when(tutorRepo.existsById(tutor.getTutorId())).thenReturn(false);
 	    assertFalse(tutorRepo.existsById(tutor.getTutorId()));
 
-		/*
-		 * Mockito.when(tutorRepo.findById(tutor.getTutorId()).get()).thenReturn(tutor);
-		 * 
-		 * assertThat(tutorService.viewProfile(tutor.getTutorId())).isEqualTo(tutor); //
-		 * assertEquals(1,tutorService.viewProfile(tutorId));
-		 */
+		
 	}
 
 	@Test
@@ -102,4 +97,22 @@ public class TutorServiceTest {
 		assertThat(requestService.viewRequest()).isEqualTo(list);
 
 	}
+	
+	
+	@Test
+	public void testFailLoginTutor() 
+	{
+		Tutor tutor = new Tutor();
+		tutor.setUsername("man433");
+		tutor.setPassword("man435");
+		tutor.setName("Manoj");
+		tutor.setSubject("Maths");
+		tutor.setQualifications("BSc");
+		tutor.setAddress("thane");
+		
+		Mockito.when(tutorRepo.loginTutor("man433", "man435")).thenReturn(tutor);
+
+		assertThat(tutorService.loginTutor("man43", "man435")).isEqualTo(tutor);
+	}
+
 }
