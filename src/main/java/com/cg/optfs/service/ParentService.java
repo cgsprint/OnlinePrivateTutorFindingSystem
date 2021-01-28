@@ -18,7 +18,7 @@ public interface ParentService {
 	 * @return parent
 	 * @author SHRUTIKA
 	 */
-	public Parent loginParent(String username, String password);
+	public List<Parent> loginParent(String username, String password);
 	/**
 	 * This method is used to add a parent
 	 * @param parent
@@ -74,7 +74,7 @@ public interface ParentService {
 	 * @return request
 	 * @author SHRUTIKA
 	 */
-	public Request demoRequest(Request request, int parentId);
+	public Request demoRequest(Request request);
 	/**
 	 * This method is used to book a tutor using parent Id
 	 * @param booking
@@ -82,6 +82,8 @@ public interface ParentService {
 	 * @return booking
 	 * @author SHRUTIKA
 	 */
-	public BookedTutor bookTutor(BookedTutor booking, int parentId);
+	public BookedTutor bookTutor(BookedTutor booking);
+	
+	public List<BookedTutor> getBookedTutors(int parentId);
 
 }

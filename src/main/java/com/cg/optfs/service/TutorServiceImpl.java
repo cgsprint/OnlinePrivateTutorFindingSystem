@@ -5,10 +5,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cg.optfs.entity.BookedTutor;
 import com.cg.optfs.entity.Booking;
+import com.cg.optfs.entity.Ebook;
 import com.cg.optfs.entity.Request;
 import com.cg.optfs.entity.Tutor;
+import com.cg.optfs.repository.BookedTutorRepository;
 import com.cg.optfs.repository.BookingRepository;
+import com.cg.optfs.repository.EbookRepository;
 import com.cg.optfs.repository.RequestRepository;
 import com.cg.optfs.repository.TutorRepository;
 
@@ -26,6 +30,10 @@ public class TutorServiceImpl implements TutorService{
 	public RequestRepository requestRepo;
 	@Autowired
 	public BookingRepository bookedRepo;
+	@Autowired
+	public BookedTutorRepository bookedTutorRepo;
+	@Autowired
+	public EbookRepository ebookRepo;
 	
 	/**
 	 * @param username
@@ -33,7 +41,7 @@ public class TutorServiceImpl implements TutorService{
 	 * @return Tutor
 	 */
 	@Override
-	public Tutor loginTutor(String username,String password) {
+	public List<Tutor> loginTutor(String username,String password) {
 		// TODO Auto-generated method stub
 		return tutorRepo.loginTutor(username, password);
 	}
@@ -65,9 +73,9 @@ public class TutorServiceImpl implements TutorService{
      */
 	
 	@Override
-	public List<Request> getAllRequests() {
+	public List<Request> getAllRequests(int tutorId) {
 		// TODO Auto-generated method stub
-		return requestRepo.findAll();
+		return requestRepo.findByTutorId(tutorId);
 	}
 	
     /**
@@ -75,9 +83,15 @@ public class TutorServiceImpl implements TutorService{
      */
 
 	@Override
-	public List<Booking> getBooking() {
+	public List<BookedTutor> getBooking(int tutorId) {
 		// TODO Auto-generated method stub
-		return bookedRepo.findAll();
+		return bookedTutorRepo.findByTutorId(tutorId);
+	}
+
+	@Override
+	public List<Ebook> getAllEbooks() {
+		// TODO Auto-generated method stub
+		return ebookRepo.findAll();
 	}
 
 }

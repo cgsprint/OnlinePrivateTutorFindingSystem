@@ -28,48 +28,80 @@ public class Request {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="requestId", length=10)
-	private int requestID;
+	private int requestId;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(foreignKey = @ForeignKey(name = "parent_id"), name = "parentId")
-	@JsonIgnore
-	private Parent parent;
+//	@ManyToOne(fetch = FetchType.EAGER)
+//	@JoinColumn(foreignKey = @ForeignKey(name = "parent_id"), name = "parentId")
+//	@JsonIgnore
+//	private Parent parent;
 
-	@Column(name="tutorId", length=10)
-	private int tutorID;
-	@Column(name="subject", length=10)
+	@Column(name="parentId")
+	private int parentId;
+
+	@Column(name="parentName")
+	private String parentName;
+	
+	@Column(name="tutorId")
+	private int tutorId;
+	
+	@Column(name="subject")
 	private String subject;
-	@Column(name = "local_time", columnDefinition = "TIME")
-	private LocalTime localTime;
+	
+	@Column(name = "local_time")
+	private String localTime;
 
-	@Column(name = "local_date", columnDefinition = "DATE")
-	private LocalDate localDate;
+	@Column(name = "local_date")
+	private String localDate;
+	
+	
 
-	@Column(name = "local_date_time", columnDefinition = "TIMESTAMP")
-	private LocalDateTime localDateTime;
-
-	public int getRequestID() {
-		return requestID;
+	public Request() {
+		super();
+		
 	}
 
-	public void setRequestID(int requestID) {
-		this.requestID = requestID;
+	public Request(int requestId, int parentId, String parentName, int tutorId, String subject, String localTime,
+			String localDate) {
+		super();
+		this.requestId = requestId;
+		this.parentId = parentId;
+		this.parentName = parentName;
+		this.tutorId = tutorId;
+		this.subject = subject;
+		this.localTime = localTime;
+		this.localDate = localDate;
 	}
 
-	public Parent getParent() {
-		return parent;
+	public int getRequestId() {
+		return requestId;
 	}
 
-	public void setParent(Parent parent) {
-		this.parent = parent;
+	public void setRequestId(int requestID) {
+		this.requestId = requestID;
 	}
 
-	public int getTutorID() {
-		return tutorID;
+	public int getParentId() {
+		return parentId;
 	}
 
-	public void setTutorID(int tutorID) {
-		this.tutorID = tutorID;
+	public void setParentId(int parentId) {
+		this.parentId = parentId;
+	}
+
+	public String getParentName() {
+		return parentName;
+	}
+
+	public void setParentName(String parentName) {
+		this.parentName = parentName;
+	}
+
+	public int getTutorId() {
+		return tutorId;
+	}
+
+	public void setTutorId(int tutorID) {
+		this.tutorId = tutorID;
 	}
 
 	public String getSubject() {
@@ -80,56 +112,31 @@ public class Request {
 		this.subject = subject;
 	}
 
-	public LocalTime getLocalTime() {
+	public String getLocalTime() {
 		return localTime;
 	}
 
-	public void setLocalTime(LocalTime localTime) {
+	public void setLocalTime(String localTime) {
 		this.localTime = localTime;
 	}
 
-	public LocalDate getLocalDate() {
+	public String getLocalDate() {
 		return localDate;
 	}
 
-	public void setLocalDate(LocalDate localDate) {
+	public void setLocalDate(String localDate) {
 		this.localDate = localDate;
-	}
-
-	public LocalDateTime getLocalDateTime() {
-		return localDateTime;
-	}
-
-	public void setLocalDateTime(LocalDateTime localDateTime) {
-		this.localDateTime = localDateTime;
-	}
-
-	public Request() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public Request(int requestID, Parent parent, int tutorID, String subject, LocalTime localTime, LocalDate localDate,
-			LocalDateTime localDateTime) {
-		super();
-		this.requestID = requestID;
-		this.parent = parent;
-		this.tutorID = tutorID;
-		this.subject = subject;
-		this.localTime = localTime;
-		this.localDate = localDate;
-		this.localDateTime = localDateTime;
 	}
 
 	@Override
 	public String toString() {
-		return "Request [requestID=" + requestID + ", parent=" + parent + ", tutorID=" + tutorID + ", subject="
-				+ subject + ", localTime=" + localTime + ", localDate=" + localDate + ", localDateTime=" + localDateTime
-				+ "]";
+		return "Request [requestID=" + requestId + ", parentId=" + parentId + ", parentName=" + parentName
+				+ ", tutorID=" + tutorId + ", subject=" + subject + ", localTime=" + localTime + ", localDate="
+				+ localDate + "]";
 	}
 
 	
 	
-	
-	
+
+		
 }

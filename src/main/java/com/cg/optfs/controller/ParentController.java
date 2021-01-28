@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,6 +24,7 @@ import com.cg.optfs.entity.Admin;
 import com.cg.optfs.entity.BookedTutor;
 import com.cg.optfs.entity.Ebook;
 import com.cg.optfs.entity.Feedback;
+import com.cg.optfs.entity.MessageEntity;
 import com.cg.optfs.entity.Parent;
 import com.cg.optfs.entity.Request;
 import com.cg.optfs.entity.Tutor;
@@ -32,6 +34,7 @@ import com.cg.optfs.service.ParentService;
 
 @RestController
 @RequestMapping("/parent")
+@CrossOrigin("*")
 public class ParentController {
 	
 	private static final Logger LOGGER=LoggerFactory.getLogger(ParentController.class);
@@ -46,25 +49,26 @@ public class ParentController {
 	}
 	
 	@PostMapping("/login")
-	public ResponseEntity<Parent> loginParent(@Valid @RequestParam("username") String username,@RequestParam("password") String password)
+	public ResponseEntity<MessageEntity> loginParent(@Valid @RequestParam("username") String username,@RequestParam("password") String password)
 	{
 		LOGGER.trace("Entering into method loginParent");
 		
-		Parent parent = parentServ.loginParent(username,password);
+		List<Parent> parent = parentServ.loginParent(username,password);
 		if(parent != null)
 		{
 			LOGGER.info("Login succesfull for Parent.");
-			
-			return new ResponseEntity("Login successfull", HttpStatus.OK);
+			MessageEntity msg = new MessageEntity("Login successfull",200);
+			msg.setParentLst(parent);
+			return new ResponseEntity<MessageEntity>(msg, HttpStatus.OK);
 		}
 		
 		LOGGER.error("Error: Enter correct username and password.");
-		
-		return new ResponseEntity("Login Failed", HttpStatus.NOT_FOUND);	
+		MessageEntity msg = new MessageEntity("Login failed",404);
+		return new ResponseEntity<MessageEntity>(msg, HttpStatus.NOT_FOUND);	
 	}
 	
 	@PostMapping("/register")
-	public ResponseEntity<Parent> addParent(@Valid @RequestBody Parent parent)
+	public ResponseEntity<MessageEntity> addParent(@Valid @RequestBody Parent parent)
 	{
 		LOGGER.trace("Entering into method addParent.");
 		
@@ -72,8 +76,9 @@ public class ParentController {
 		if(parent1 != null)
 		{
 			LOGGER.info("Parent registered successfully.");
-			
-			return new ResponseEntity("Parent registered...", HttpStatus.OK);
+			MessageEntity msg = new MessageEntity("Registered successfully",200);
+//			msg.setParentLst(parent);
+			return new ResponseEntity<MessageEntity>(msg, HttpStatus.OK);
 		}
 		
 		LOGGER.error("Error: Enter valid data.");
@@ -161,12 +166,12 @@ public class ParentController {
 		return new ResponseEntity("Unable to add a Feedback!", HttpStatus.NOT_FOUND);
 	}
 	
-	@PostMapping("/demoRequest/{parentId}")
-	public ResponseEntity<Request> demoRequest(@PathVariable int parentId,@RequestBody Request request)
+	@PostMapping("/demoRequest")
+	public ResponseEntity<Request> demoRequest(@RequestBody Request request)
 	{
 		LOGGER.trace("Entering into method demoRequest");
 		
-		Request add=parentServ.demoRequest(request,parentId);
+		Request add=parentServ.demoRequest(request);
 		if(add!=null)
 		{
 			LOGGER.info("Requested for demo lecture.");
@@ -177,12 +182,12 @@ public class ParentController {
 		return new ResponseEntity("Unable to request a demo lecture!", HttpStatus.NOT_FOUND);
 	}
 	
-	@PostMapping("/bookTutor/{parentId}")
-	public ResponseEntity<BookedTutor> bookTutor(@PathVariable int parentId,@RequestBody BookedTutor booking)
+	@PostMapping("/bookTutor")
+	public ResponseEntity<BookedTutor> bookTutor(@RequestBody BookedTutor booking)
 	{
 		LOGGER.trace("Entering into method bookTutor");
 		
-		BookedTutor add=parentServ.bookTutor(booking,parentId);
+		BookedTutor add=parentServ.bookTutor(booking);
 		if(add!=null)
 		{
 			LOGGER.info("Booked Tutor");
@@ -191,5 +196,15 @@ public class ParentController {
 		
 		LOGGER.error("Error: Unable to book a tutor");
 		return new ResponseEntity("Unable to book a tutor!", HttpStatus.NOT_FOUND);
+	}
+	
+	@PostMapping("/getBookedTutors")
+	public List<BookedTutor> getBookedTutors(@RequestParam("parentId") int parentId) {
+		
+		LOGGER.trace("Entering into method getAllRequest");
+		
+		LOGGER.info("Requests found for Tutor");
+		
+		return parentServ.getBookedTutors(parentId);
 	}
 }

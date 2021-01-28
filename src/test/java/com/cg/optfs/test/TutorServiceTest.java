@@ -47,7 +47,7 @@ public class TutorServiceTest {
 		tutor.setQualifications("BscIt");
 		tutor.setAddress("thane");
 		
-		Mockito.when(tutorRepo.loginTutor("man43", "man435")).thenReturn(tutor);
+		Mockito.when(tutorRepo.loginTutor("man43", "man435")).thenReturn((List<Tutor>) tutor);
 
 		assertThat(tutorService.loginTutor("man43", "man435")).isEqualTo(tutor);
 	}
@@ -110,9 +110,9 @@ public class TutorServiceTest {
 		tutor.setQualifications("BSc");
 		tutor.setAddress("thane");
 		
-		Mockito.when(tutorRepo.loginTutor("man433", "man435")).thenReturn(tutor);
+		Mockito.when(tutorRepo.loginTutor("man43", "man435")).thenReturn(null);
 
-		assertThat(tutorService.loginTutor("man43", "man435")).isEqualTo(tutor);
+		assertThat(tutorService.loginTutor("man43", "man435")).isNull();
 	}
 
 }

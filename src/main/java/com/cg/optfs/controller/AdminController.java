@@ -1,6 +1,7 @@
 package com.cg.optfs.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -9,8 +10,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.optfs.entity.Admin;
 import com.cg.optfs.entity.Ebook;
+import com.cg.optfs.entity.MessageEntity;
 import com.cg.optfs.entity.Parent;
 import com.cg.optfs.entity.Tutor;
 import com.cg.optfs.exception.EbookNotFoundException;
@@ -34,6 +38,7 @@ import com.cg.optfs.service.AdminService;
  */
 @RestController
 @RequestMapping("/admin")
+@CrossOrigin("*")
 public class AdminController {
 	
 	private static final Logger LOGGER=LoggerFactory.getLogger(AdminController.class);
@@ -46,29 +51,50 @@ public class AdminController {
 	// =======================================================
 	
 	@PostMapping("/login")
-	public ResponseEntity<Admin> loginAdmin(@Valid @RequestParam("username") String username,
+	public ResponseEntity<MessageEntity> loginAdmin(@Valid @RequestParam("username") String username,
 			@RequestParam("password") String password)
 	{
 		LOGGER.trace("Entering into method loginAdmin");
+//		Admin admin1 = adminServ.getAdminByUsername(username);
+//		if(admin1 != null)
+//		{
+		/*
+		 * Admin admin = adminServ.loginAdmin(username,password); if(admin != null) {
+		 * LOGGER.info("Login successfull"); MessageEntity msg = new
+		 * MessageEntity("Login successfull", 200); return new
+		 * ResponseEntity<MessageEntity>(msg, HttpStatus.OK); }
+		 * LOGGER.error("Error: Enter correct username and password."); MessageEntity
+		 * msg = new MessageEntity("Username or password invalid", 404); return new
+		 * ResponseEntity<MessageEntity>(msg, HttpStatus.NOT_FOUND);
+		 */
 		
-		
-		Admin admin = adminServ.loginAdmin(username,password);
-		if(admin != null)
+		List<Admin> aList = adminServ.loginAdmin(username,password);
+		if(aList != null)
 		{
 			LOGGER.info("Login successfull");
-			return new ResponseEntity("Login successfull", HttpStatus.OK);
+			MessageEntity msg = new MessageEntity("Login successfull",200);
+			msg.setAdminLst(aList);
+			return new ResponseEntity<MessageEntity>(msg, HttpStatus.OK);
 		}
 		LOGGER.error("Error: Enter correct username and password.");
-		return new ResponseEntity("Login Failed", HttpStatus.NOT_FOUND);
+		MessageEntity msg = new MessageEntity("Username or password invalid", 404);
+		return new ResponseEntity<MessageEntity>(msg, HttpStatus.NOT_FOUND);
 		
+//		}
+//		else
+//		{
+//			MessageEntity msg = new MessageEntity("User does not exist", 404);
+//			return new ResponseEntity<MessageEntity>(msg, HttpStatus.NOT_FOUND);
+//		}
 	}
+	
 	
 	// =======================================================
 	//						Add tutor
 	// =======================================================
 		
 	@PostMapping("/addTutor")
-	public ResponseEntity<Tutor> addTutor(@Valid @RequestBody Tutor tutor)
+	public ResponseEntity<MessageEntity> addTutor(@Valid @RequestBody Tutor tutor)
 	{
 		LOGGER.trace("Entering into method addTutor");
 		
@@ -76,8 +102,9 @@ public class AdminController {
 		if(tutor1 != null)
 		{
 			LOGGER.info("Tutor added");
+			MessageEntity msg = new MessageEntity("Tutor registered successfully",200);
 			
-			return new ResponseEntity<Tutor>(tutor1, HttpStatus.OK);
+			return new ResponseEntity<MessageEntity>(msg, HttpStatus.OK);
 		}
 		
 		LOGGER.error("Error 404");
@@ -91,57 +118,38 @@ public class AdminController {
 		
 	
 	@PutMapping("/updateTutor")
-	public ResponseEntity<Tutor> updateTutor(@Valid @RequestParam("id") Long id,@RequestBody Tutor tutor)throws TutorNotFoundException
+	public ResponseEntity<MessageEntity> updateTutor(@Valid @RequestBody Tutor tutor)throws TutorNotFoundException
 	{
 		LOGGER.trace("Entering into method updateTutor");
 		
-		
-		
-//		Optional<Tutor> tu =  adminServ.getTutorById(Id); 
-		Tutor tu = adminServ.getTutorById(id).orElseThrow(()-> new TutorNotFoundException("Tutor does not exist with id"+id));
-		if(tu != null)
+		Tutor tu1 = adminServ.updateTutor(tutor);
+		if(tu1 == null)
 		{
-			LOGGER.info("Tutor updated successfully");
-			
-			tu.setName(tutor.getName());
-			tu.setUsername(tutor.getUsername());
-			tu.setPassword(tutor.getPassword());
-			tu.setAddress(tutor.getAddress());
-			tu.setPhoneNumber(tutor.getPhoneNumber());
-			tu.setQualifications(tutor.getQualifications());
-			tu.setSubject(tutor.getSubject());
-			Tutor tu1 = adminServ.updateTutor(tu);
-			if(tu1 == null)
-			{
-				LOGGER.error("Error 404");
-				
-				return new ResponseEntity("Failed to update tutor", HttpStatus.NOT_FOUND);
-			}
-			LOGGER.info("Tutor updated successfully");
-			return new ResponseEntity<Tutor>(tu1, HttpStatus.OK);
+			LOGGER.error("Error 404");
+			return new ResponseEntity("Failed to update tutor", HttpStatus.NOT_FOUND);
 		}
-		
-		return new ResponseEntity("No Such Tutor Found!", HttpStatus.NOT_FOUND);
-		
+		LOGGER.info("Tutor updated successfully");
+		MessageEntity msg = new MessageEntity("Tutor updated successfully",200);
+		return new ResponseEntity<MessageEntity>(msg, HttpStatus.OK);
 	}
+		
 	
 	// =======================================================
 	//						Delete Tutor
 	// =======================================================
 		
 	@DeleteMapping("/deleteTutor")
-	public String deleteTutor(@RequestParam("id") Long id)throws TutorNotFoundException
+	public List<Tutor> deleteTutor(@RequestParam("id") Long id)throws TutorNotFoundException
 	{
 		LOGGER.trace("Entering into method deleteTutor");
 		
 		
-		
 		Tutor tu = adminServ.getTutorById(id).orElseThrow(()->new TutorNotFoundException("Tutor does not exist with id "+id));
-		adminServ.deleteTutor(tu);
+		List<Tutor> tutorListAfterDel = adminServ.deleteTutor(tu);
 		
 		LOGGER.info("Tutor deleted successfully");
 		
-		return "Tutor deleted...";
+		return tutorListAfterDel;
 	}
 	
 	// =======================================================
@@ -150,21 +158,23 @@ public class AdminController {
 		
 	
 	@PostMapping("/addEbook")
-	public ResponseEntity<Ebook> addEbook(@RequestBody Ebook ebook)
+	public ResponseEntity<MessageEntity> addEbook(@RequestBody Ebook ebook)
 	{
 		LOGGER.trace("Entering into method addEbook");
 		
 		Ebook ebook1 = adminServ.addEbook(ebook);
 		if(ebook1 != null)
 		{
+			MessageEntity msg = new MessageEntity("Ebook added successfully",200);
 			LOGGER.info("Ebook added succesfully");
 			
-			return new ResponseEntity<Ebook>(ebook1, HttpStatus.OK);
+			return new ResponseEntity<MessageEntity>(msg, HttpStatus.OK);
 		}
 		
 		LOGGER.error("Error 404");
-		
-		return new ResponseEntity("Failed to add ebook", HttpStatus.NOT_FOUND);
+
+		MessageEntity msg = new MessageEntity("Failed to add ebook",404);
+		return new ResponseEntity<MessageEntity>(msg, HttpStatus.NOT_FOUND);
 		
 	}
 	
@@ -174,33 +184,19 @@ public class AdminController {
 		
 	
 	@PutMapping("/updateEbook")
-	public ResponseEntity<Ebook> updateEbook(@RequestParam("id") int id,@RequestBody Ebook ebook)throws EbookNotFoundException
+	public ResponseEntity<MessageEntity> updateEbook(@RequestBody Ebook ebook)throws EbookNotFoundException
 	{
 		LOGGER.trace("Entering into method updateEbook");
 		
-		
-		
-		Ebook eb = adminServ.getEbookById(id).orElseThrow(()-> new EbookNotFoundException("Ebook does not exist with id "+id));
-		if(eb != null)
+		Ebook eb2 = adminServ.updateEbook(ebook);
+		if(eb2 == null)
 		{
-			
-			eb.setTitle(ebook.getTitle());
-			eb.setAuthorname(ebook.getAuthorname());
-			eb.setUrl(ebook.getUrl());
-			Ebook eb2 = adminServ.updateEbook(eb);
-			if(eb2 == null)
-			{
-				LOGGER.error("Error 404");
-				
-				return new ResponseEntity("Failed to update ebook", HttpStatus.NOT_FOUND);
-			}
-			LOGGER.info("Ebook updated");
-			
-			return new ResponseEntity<Ebook>(eb2, HttpStatus.OK);
+			LOGGER.error("Error 404");
+			return new ResponseEntity("Failed to update ebook", HttpStatus.NOT_FOUND);
 		}
-		
-		
-		return new ResponseEntity("No Such Ebook Found!", HttpStatus.NOT_FOUND);
+		LOGGER.info("Ebook updated");
+		MessageEntity msg = new MessageEntity("Ebook updated successfully",200);
+		return new ResponseEntity<MessageEntity>(msg, HttpStatus.OK);
 	}
 	
 	// =======================================================
@@ -208,19 +204,21 @@ public class AdminController {
 	// =======================================================
 		
 	@DeleteMapping("/deleteEbook")
-	public String deleteEbook(@RequestParam("id") int id)throws EbookNotFoundException
+	public List<Ebook> deleteEbook(@RequestParam("id") int id)throws EbookNotFoundException
 	{
 		LOGGER.trace("Entering into method deleteEbook");
 		
 		LOGGER.error("Error 404");
 		
 		Ebook eb = adminServ.getEbookById(id).orElseThrow(()->new EbookNotFoundException("Ebook does not exist with id "+id));
-		adminServ.deleteEbook(eb);
+		List<Ebook> ebookListAfterDel = adminServ.deleteEbook(eb);
 		
 		LOGGER.info("Ebook deleted");
 		
-		return "Ebook deleted...";
+		return ebookListAfterDel;
 	}
+	
+	
 	
 	// =======================================================
 	//						View Parents
@@ -238,6 +236,48 @@ public class AdminController {
 		
 		return parents;
 	}
+	
+	// ===============================================
+	// 					Get tutors list
+	// ===============================================
+	
+	@GetMapping("/viewTutors")
+	public List<Tutor> viewTutors()
+	{
+		LOGGER.trace("Entering into method viewTutors");
+		
+		List<Tutor> tutors = adminServ.viewTutors();
+		
+		LOGGER.info("Parent list");
+		
+		return tutors;
+	}
+	
+	// ===============================================
+		// 					Get ebook list
+		// ===============================================
+		
+		@GetMapping("/viewEbooks")
+		public List<Ebook> viewEbooks()
+		{
+			
+			List<Ebook> ebooks = adminServ.viewEbook();
+			
+			LOGGER.info("Parent list");
+			
+			return ebooks;
+		}
+	
+	@GetMapping("/getTutorById")
+	public Optional<Tutor> getTutorById(@RequestParam("id") long tutorId) {
+
+		LOGGER.trace("Entering into method viewProfile");
+		
+		LOGGER.info("Tutorprofile is found");
+		Optional<Tutor> tut = adminServ.getTutorById(tutorId);
+		return tut;
+	}
+	
 	
 
 }

@@ -30,23 +30,37 @@ public class BookedTutor {
 	@Column(name="bookedId", length=10)
 	private int bookedId;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(foreignKey = @ForeignKey(name = "parent_id"), name = "parentId")
-	@JsonIgnore
-	private Parent parent;
+//	@ManyToOne(fetch = FetchType.EAGER)
+//	@JoinColumn(foreignKey = @ForeignKey(name = "parent_id"), name = "parentId")
+//	@JsonIgnore
+//	private Parent parent;
 	
-	@Column(name="tutorId", length=10)
+	@Column(name="tutorId")
 	private int tutorId;
-	@Column(name="subject", length=10)
+	
+	@Column(name="parentId")
+	private int parentId;
+
+	@Column(name="parentName")
+	private String parentName;
+	
+	@Column(name="subject")
 	private String subject;
-	@Column(name = "local_time", columnDefinition = "TIME")
-	private LocalTime localTime;
+	
+	@Column(name = "local_time")
+	private String localTime;
+	
+	@Column(name = "local_date")
+	private String localDate;
+	
+//	@Column(name = "local_time", columnDefinition = "TIME")
+//	private LocalTime localTime;
+//
+//	@Column(name = "local_date", columnDefinition = "DATE")
+//	private LocalDate localDate;
 
-	@Column(name = "local_date", columnDefinition = "DATE")
-	private LocalDate localDate;
-
-	@Column(name = "local_date_time", columnDefinition = "TIMESTAMP")
-	private LocalDateTime localDateTime;
+//	@Column(name = "local_date_time", columnDefinition = "TIMESTAMP")
+//	private LocalDateTime localDateTime;
 
 	public int getBookedId() {
 		return bookedId;
@@ -56,13 +70,13 @@ public class BookedTutor {
 		this.bookedId = bookedId;
 	}
 
-	public Parent getParent() {
-		return parent;
-	}
-
-	public void setParent(Parent parent) {
-		this.parent = parent;
-	}
+//	public Parent getParent() {
+//		return parent;
+//	}
+//
+//	public void setParent(Parent parent) {
+//		this.parent = parent;
+//	}
 
 	public int getTutorId() {
 		return tutorId;
@@ -80,28 +94,45 @@ public class BookedTutor {
 		this.subject = subject;
 	}
 
-	public LocalTime getLocalTime() {
+	public String getLocalTime() {
 		return localTime;
 	}
 
-	public void setLocalTime(LocalTime localTime) {
+	public void setLocalTime(String localTime) {
 		this.localTime = localTime;
 	}
 
-	public LocalDate getLocalDate() {
+	public String getLocalDate() {
 		return localDate;
 	}
 
-	public void setLocalDate(LocalDate localDate) {
+	public void setLocalDate(String localDate) {
 		this.localDate = localDate;
 	}
 
-	public LocalDateTime getLocalDateTime() {
-		return localDateTime;
+	
+//	public LocalDateTime getLocalDateTime() {
+//		return localDateTime;
+//	}
+//
+//	public void setLocalDateTime(LocalDateTime localDateTime) {
+//		this.localDateTime = localDateTime;
+//	}
+
+	public int getParentId() {
+		return parentId;
 	}
 
-	public void setLocalDateTime(LocalDateTime localDateTime) {
-		this.localDateTime = localDateTime;
+	public void setParentId(int parentId) {
+		this.parentId = parentId;
+	}
+
+	public String getParentName() {
+		return parentName;
+	}
+
+	public void setParentName(String parentName) {
+		this.parentName = parentName;
 	}
 
 	public BookedTutor() {
@@ -109,24 +140,25 @@ public class BookedTutor {
 		// TODO Auto-generated constructor stub
 	}
 
-	public BookedTutor(int bookedId, Parent parent, int tutorId, String subject, LocalTime localTime,
-			LocalDate localDate, LocalDateTime localDateTime) {
-		super();
-		this.bookedId = bookedId;
-		this.parent = parent;
-		this.tutorId = tutorId;
-		this.subject = subject;
-		this.localTime = localTime;
-		this.localDate = localDate;
-		this.localDateTime = localDateTime;
-	}
+public BookedTutor(int bookedId, int tutorId, int parentId, String parentName, String subject, String localTime,
+		String localDate) {
+	super();
+	this.bookedId = bookedId;
+	this.tutorId = tutorId;
+	this.parentId = parentId;
+	this.parentName = parentName;
+	this.subject = subject;
+	this.localTime = localTime;
+	this.localDate = localDate;
+}
 
-	@Override
-	public String toString() {
-		return "BookedTutor [bookedId=" + bookedId + ", parent=" + parent + ", tutorId=" + tutorId + ", subject="
-				+ subject + ", localTime=" + localTime + ", localDate=" + localDate + ", localDateTime=" + localDateTime
-				+ "]";
-	}
+@Override
+public String toString() {
+	return "BookedTutor [bookedId=" + bookedId + ", tutorId=" + tutorId + ", parentId=" + parentId + ", parentName="
+			+ parentName + ", subject=" + subject + ", localTime=" + localTime + ", localDate=" + localDate + "]";
+}
+
+	
 	
 	
 	

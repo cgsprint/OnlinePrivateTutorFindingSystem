@@ -42,7 +42,7 @@ public class ParentServiceImpl implements ParentService {
 	@Autowired 
 	private BookedTutorRepository bookedRepo;
 	@Override
-	public Parent loginParent(String username, String password) {
+	public List<Parent> loginParent(String username, String password) {
 		// TODO Auto-generated method stub
 		return parentRepo.loginParent(username,password);
 	}
@@ -98,33 +98,39 @@ public class ParentServiceImpl implements ParentService {
 	}
 
 	@Override
-	public Request demoRequest(Request request, int parentId) {
+	public Request demoRequest(Request request) {
 		// TODO Auto-generated method stub
-		Parent parent=parentRepo.getOne(parentId);
 		Request demo=new Request();
-		demo.setTutorID(request.getTutorID());
+		demo.setTutorId(request.getTutorId());
+		demo.setParentId(request.getParentId());
+		demo.setParentName(request.getParentName());
 		demo.setSubject(request.getSubject());
 		demo.setLocalDate(request.getLocalDate());
 		demo.setLocalTime(request.getLocalTime());
-		demo.setLocalDateTime(request.getLocalDateTime());
-		demo.setParent(parent);
+		System.out.println(demo);
 		Request addDemo=requestRepo.save(demo);
 		return addDemo;
 	}
 
 	@Override
-	public BookedTutor bookTutor(BookedTutor booking, int parentId) {
+	public BookedTutor bookTutor(BookedTutor booking) {
 		// TODO Auto-generated method stub
-		Parent parent=parentRepo.getOne(parentId);
 		BookedTutor booking1=new BookedTutor();
+		
 		booking1.setTutorId(booking.getTutorId());
+		booking1.setParentId(booking.getParentId());
+		booking1.setParentName(booking.getParentName());
 		booking1.setSubject(booking.getSubject());
 		booking1.setLocalDate(booking.getLocalDate());
 		booking1.setLocalTime(booking.getLocalTime());
-		booking1.setLocalDateTime(booking.getLocalDateTime());
-		booking1.setParent(parent);
 		BookedTutor addBooking=bookedRepo.save(booking1);
 		return addBooking;
+	}
+
+	@Override
+	public List<BookedTutor> getBookedTutors(int parentId) {
+		// TODO Auto-generated method stub
+		return bookedRepo.findByParentId(parentId);
 	}
 
 }

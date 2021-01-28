@@ -3,6 +3,8 @@ package com.cg.optfs.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,8 +44,8 @@ public class AdminServiceImpl implements AdminService{
 	// 					Login admin
 	// ===================================================
 	@Override
-	public Admin loginAdmin(String username, String password) {
-		return adminRepo.loginAdmin(username,password);
+	public List<Admin> loginAdmin(String username, String password) {
+		return adminRepo.findByAdminUsernameAndAdminPassword(username,password);
 	}
 
 	// ===================================================
@@ -78,8 +80,10 @@ public class AdminServiceImpl implements AdminService{
 	// 			delete tutor using tutor entity
 	// ===================================================
 	@Override
-	public void deleteTutor(Tutor tu) {
+	public List<Tutor> deleteTutor(Tutor tu) {
 		tutorRepo.delete(tu);
+		List<Tutor> tutors = tutorRepo.findAll();
+		return tutors;
 	}
 
 	// ===================================================
@@ -113,10 +117,13 @@ public class AdminServiceImpl implements AdminService{
 	// 					delete ebook
 	// ===================================================
 	@Override
-	public void deleteEbook(Ebook eb) {
+	public List<Ebook> deleteEbook(Ebook eb) {
 		ebookRepo.delete(eb);
+		List<Ebook> ebooks = ebookRepo.findAll();
+		return ebooks;
 	}
 
+	
 	// ===================================================
 	// 					view parents
 	// ===================================================
@@ -124,6 +131,24 @@ public class AdminServiceImpl implements AdminService{
 	public List<Parent> viewParents() {
 		List<Parent> parents = parentRepo.findAll();
 		return parents;
+	}
+
+	@Override
+	public Admin getAdminByUsername(@Valid String username) {
+		Admin admin = adminRepo.getAdminByUsername(username);
+		return admin;
+	}
+
+	@Override
+	public List<Tutor> viewTutors() {
+		List<Tutor> tutors = tutorRepo.findAll();
+		return tutors;
+	}
+
+	@Override
+	public List<Ebook> viewEbook() {
+		List<Ebook> ebooks = ebookRepo.findAll();
+		return ebooks;
 	}
 	
 	

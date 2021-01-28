@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +18,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cg.optfs.entity.BookedTutor;
 import com.cg.optfs.entity.Booking;
+import com.cg.optfs.entity.Ebook;
+import com.cg.optfs.entity.MessageEntity;
 import com.cg.optfs.entity.Request;
 import com.cg.optfs.entity.Tutor;
 import com.cg.optfs.service.TutorService;
@@ -29,6 +33,7 @@ import com.cg.optfs.service.TutorService;
  */
 
 @RestController
+@CrossOrigin("*")
 public class TutorController {
 
 	private static final Logger LOGGER=LoggerFactory.getLogger(TutorController.class);
@@ -44,22 +49,23 @@ public class TutorController {
 	 */
 	
 	@PostMapping("/logintutor")
-	public ResponseEntity<Tutor> loginTutor(@Valid @RequestParam("username") String username,
+	public ResponseEntity<MessageEntity> loginTutor(@Valid @RequestParam("username") String username,
 			@RequestParam("password") String password)
 	{
 		LOGGER.trace("Entering into method loginTutor");
 		
-		Tutor tutor = tutorservice.loginTutor(username,password);
+		List<Tutor> tutor = tutorservice.loginTutor(username,password);
 		if(tutor != null)
 		{
 			LOGGER.info("Login successful for Tutor..");
-			
-			return new ResponseEntity("Login successfull", HttpStatus.OK);
+			MessageEntity msg = new MessageEntity("Login successfull",200);
+			msg.setTutorLst(tutor);
+			return new ResponseEntity<MessageEntity>(msg, HttpStatus.OK);
 		}
 		
 		LOGGER.error("Error: Enter correct username and password..");
-		
-		return new ResponseEntity("Login Failed", HttpStatus.NOT_FOUND);
+		MessageEntity msg = new MessageEntity("Login failed",404);
+		return new ResponseEntity<MessageEntity>(msg, HttpStatus.NOT_FOUND);
 		
 	}
 	
@@ -92,8 +98,8 @@ public class TutorController {
 	 * @param tutorId
 	 * @return Tutor
 	 */
-	@GetMapping("/viewTutor/{tutorId}")
-	public Tutor viewProfile(@PathVariable long tutorId) {
+	@GetMapping("/tutor/viewTutor")
+	public Tutor viewProfile(@RequestParam("id") long tutorId) {
 
 		LOGGER.trace("Entering into method viewProfile");
 		
@@ -105,24 +111,34 @@ public class TutorController {
      * 
      * @return Request
      */
-	@GetMapping("/request")
-	public List<Request> getAllRequest() {
+	@GetMapping("/getDemoRequest")
+	public List<Request> getAllRequest(@RequestParam("tutorId") int tutorId) {
 		
 		LOGGER.trace("Entering into method getAllRequest");
 		
 		LOGGER.info("Requests found for Tutor");
 		
-		return tutorservice.getAllRequests();
+		return tutorservice.getAllRequests(tutorId);
 	}
 	
-	@GetMapping("/bookedTutor")
-	public List<Booking> getBooking() {
+	@GetMapping("/getBookedTutor")
+	public List<BookedTutor> getBooking(@RequestParam("tutorId") int tutorId) {
 		
 		LOGGER.trace("Entering into method getAllRequest");
 		
 		LOGGER.info("Requests found for Tutor");
 		
-		return tutorservice.getBooking();
+		return tutorservice.getBooking(tutorId);
+	}
+	
+	@GetMapping("/viewEbooks")
+	public List<Ebook> getAllEbooks() {
+		
+		LOGGER.trace("Entering into method getAllRequest");
+		
+		LOGGER.info("Requests found for Tutor");
+		
+		return tutorservice.getAllEbooks();
 	}
 	
 

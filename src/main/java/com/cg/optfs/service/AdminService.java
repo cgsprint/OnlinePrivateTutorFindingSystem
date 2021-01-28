@@ -4,6 +4,8 @@ import java.util.List;
 
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Service;
 
 import com.cg.optfs.entity.Admin;
@@ -25,7 +27,7 @@ public interface AdminService {
 	 * @return Admin
 	 * @author TEJAS HATLE
 	 */
-	public Admin loginAdmin(String username, String password);
+	public List<Admin> loginAdmin(String username, String password);
 	
 	
 	/**
@@ -60,7 +62,7 @@ public interface AdminService {
 	 * @author TEJAS HATLE
 	 */
 
-	public void deleteTutor(Tutor tu);
+	public List<Tutor> deleteTutor(Tutor tu);
 	
 	
 	/**
@@ -95,9 +97,10 @@ public interface AdminService {
 	 * This method is used to delete the ebook record from database
 	 * @param eb
 	 * @author TEJAS HATLE
+	 * @return 
 	 */
 
-	public void deleteEbook(Ebook eb);
+	public List<Ebook> deleteEbook(Ebook eb);
 	
 	
 	/**
@@ -107,6 +110,15 @@ public interface AdminService {
 	 */
 
 	public List<Parent> viewParents();
+
+
+	public Admin getAdminByUsername(@Valid String username);
+
+
+	public List<Tutor> viewTutors();
+
+
+	public List<Ebook> viewEbook();
 
 	
 	

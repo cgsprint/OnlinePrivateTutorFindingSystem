@@ -40,7 +40,7 @@ public class ParentServiceTest {
 		parent.setMobileNo("7040760465");
 		parent.setEmail("manojc@gmail.com");
 		
-		Mockito.when(parentRepo.loginParent("man43", "man435")).thenReturn(parent);
+		Mockito.when(parentRepo.loginParent("man43", "man435")).thenReturn((List<Parent>) parent);
 
 		assertThat(parentService.loginParent("man43", "man435")).isEqualTo(parent);
 	}
@@ -76,15 +76,7 @@ public class ParentServiceTest {
 		 assertThat(parentService.addParent(parent)).isEqualTo(parent);
 	
 	}
-	@Ignore
-	 @Test
-	 public void testGetTutorList() {
-	      
-			List<Parent> list = new ArrayList<>();
-			Mockito.when(parentRepo.findAll()).thenReturn(list);
-			assertThat(parentService.viewAllTutor()).isEqualTo(list);
-			
-		}
+	
 	
 	@Test
 	public void testGetByIdParent() {

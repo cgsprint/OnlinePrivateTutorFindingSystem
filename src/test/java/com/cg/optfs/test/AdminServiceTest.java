@@ -1,8 +1,10 @@
 package com.cg.optfs.test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -36,26 +38,31 @@ class AdminServiceTest {
 	@MockBean
 	private TutorRepository tutorRepo;
 	
+//	
+//	@Test
+//	public void testLoginAdmin() 
+//	{
+//		List<Admin> admin = (List<Admin>) getAdmin();
+//		
+//		Mockito.when(adminRepo.loginAdmin("tejas", "tejas123")).thenReturn(admin);
+//
+//		assertThat(adminService.loginAdmin("tejas", "tejas123")).isEqualTo(admin);
+//	}
 	
-	@Test
-	public void testLoginAdmin() 
-	{
-		Admin admin = new Admin();
-		admin.setAdminId(1);
-		admin.setAdminName("Tejas");
-		admin.setAdminUsername("tejas");
-		admin.setAdminPassword("tejas123");
-		
-		Mockito.when(adminRepo.loginAdmin("tejas", "tejas123")).thenReturn(admin);
-
-		assertThat(adminService.loginAdmin("tejas", "tejas123")).isEqualTo(admin);
-	}
+//	@Test
+//	public void testFailedLoginAdmin() 
+//	{
+//		Admin admin = getAdmin();
+//		
+//		Mockito.when(adminRepo.loginAdmin("tejas", "tejas")).thenReturn(null);
+//
+//		assertThat(adminService.loginAdmin("tejas", "tejas")).isNull();
+//	}
 	
 	@Test
 	public void testAddTutor()
 	{
 		Tutor tutor = new Tutor();
-//		tutor.setTutorId(4);
 		tutor.setName("Jayesh");
 		tutor.setUsername("jay");
 		tutor.setPassword("jay123");
@@ -73,19 +80,21 @@ class AdminServiceTest {
 	@Test
 	public void testDeleteTutor()
 	{
-		Tutor tutor = new Tutor();
-		tutor.setTutorId(4);
-		tutor.setName("Jayesh");
-		tutor.setUsername("jay");
-		tutor.setPassword("jay123");
-		tutor.setSubject("Maths");
-		tutor.setAddress("Boriwali");
-		tutor.setPhoneNumber("9090898972");
-		tutor.setQualifications("Bsc");
+		Tutor tutor = getTutor();
 		
 		Mockito.when(tutorRepo.getOne((long) 4)).thenReturn(tutor);
 		Mockito.when(tutorRepo.existsById(tutor.getTutorId())).thenReturn(false);
 		assertFalse(tutorRepo.existsById(tutor.getTutorId()));
+		
+	}
+	
+	@Test
+	public void testFailedToDeleteTutor()
+	{
+		Tutor tutor = getTutor();
+		Mockito.when(tutorRepo.getOne((long) 4)).thenReturn(tutor);
+		Mockito.when(tutorRepo.existsById(tutor.getTutorId())).thenReturn(true);
+		assertTrue(tutorRepo.existsById(tutor.getTutorId()));
 		
 	}
 	
@@ -103,6 +112,31 @@ class AdminServiceTest {
 		
 		assertThat(adminService.addEbook(ebook)).isEqualTo(ebook);
 		
+	}
+	
+	public Admin getAdmin()
+	{
+		Admin admin = new Admin();
+		admin.setAdminId(1);
+		admin.setAdminName("Tejas");
+		admin.setAdminUsername("tejas");
+		admin.setAdminPassword("tejas123");
+		return admin;
+		
+		
+	}
+	public Tutor getTutor()
+	{
+		Tutor tutor = new Tutor();
+		tutor.setTutorId(4);
+		tutor.setName("Jayesh");
+		tutor.setUsername("jay");
+		tutor.setPassword("jay123");
+		tutor.setSubject("Maths");
+		tutor.setAddress("Boriwali");
+		tutor.setPhoneNumber("9090898972");
+		tutor.setQualifications("Bsc");
+		return tutor;
 	}
 	
 	
